@@ -2,7 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cookies from "cookie-parser";
 import cors from "cors";
-import dbConfig from "./config/database";
+import dbConfig from "./config/database.js";
+
+import authRoutes from "./route/auth.js";
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ app.use(
 app.use(express.json());
 const PORT = 4000;
 
+app.use("/api", authRoutes);
 app.get("/", (req, res) => {
   res.send("ConinHub backend is running");
 });
