@@ -9,7 +9,7 @@ import Image from "next/image";
 function Mainhome() {
   const [menu, setMenu] = useState(false);
   return (
-    <div className="container mx-auto bg-background w-full h-[100vh] p-[10px]">
+    <div className="container mx-auto bg-background w-full h-auto p-[10px] pb-[30px]">
       <div className=" w-[95%] mx-auto h-auto mt-[10px]">
         {/* header section */}
         <div className="flex justify-between items-center">
@@ -35,16 +35,27 @@ function Mainhome() {
             </Link>
           </div>
 
-          <div className="lg:hidden" onClick={() => setMenu(!menu)}>
+          <div
+            className=" font-orbitron text-3xl bold text-text-secondary lg:hidden z-60"
+            onClick={() => setMenu(!menu)}
+          >
             {menu ? <IoCloseOutline /> : <CiMenuBurger />}
           </div>
 
           {menu && (
-            <div className="hidden lg:block">
-              <Link onClick={() => setMenu(false)} href="/signup">
-                SignUp
+            <div className="lg:hidden bg-background fixed inset-0 flex flex-col justify-center items-center gap-3 z-50">
+              <Link
+                className="font-outfit text-1xl bold text-text-secondary"
+                onClick={() => setMenu(false)}
+                href="/signup"
+              >
+                Signup
               </Link>
-              <Link onClick={() => setMenu(false)} href="/login">
+              <Link
+                className="font-outfit text-1xl bold text-text-secondary"
+                onClick={() => setMenu(false)}
+                href="/login"
+              >
                 Login
               </Link>
             </div>
@@ -53,59 +64,84 @@ function Mainhome() {
 
         {/* body section */}
 
-        <div className="mx-auto flex justify-between items-center h-[80vh]">
+        <div className=" mt-[20px] lg:mt-[40px] lg:flex justify-between items-center">
           {/* body text */}
-          <div>
-            <h2>Trade Smarter. Faster. With AI-Driven Precision.</h2>
-            <p>
+          <div className="w-[100%] lg:w-[70%] flex flex-col">
+            <h2 className="w-[100%] text-center lg:max-w-[500px] font-outfit text-text-secondary text-2xl lg:text-5xl font-bold">
+              Trade Smarter. Faster. With AI-Driven Precision.
+            </h2>
+            <p className="mt-[15px] font-nunito-sans text-text-primary text-base max-w-[450px] font-semibold">
               Unlock the future of crypto trading with intelligent insights,
               automated strategies, and seamless wallet connectivity.
             </p>
-            <p>
+            <p className="mt-[15px] font-nunito-sans text-text-primary text-base max-w-[450px] font-semibold">
               Connect your existing wallet or create a new one, and trade with
               confidence powered by advanced AI-powered tools.
             </p>
 
-            <h5>Features</h5>
-            <ul>
-              <li>
-                <span>
+            <h5 className=" mt-[10px] font-roboto text-text-secondary text-2xl font-bold">
+              Features
+            </h5>
+            <ul className="mt-[5px] flex flex-col gap-3">
+              <li className="flex gap-2 items-center">
+                <span className="text-accent-blue font-bold">
                   <IoMdCheckmark />
                 </span>
-                <span>Connect your existing wallet instantly</span>
+                <span className="text-accent-green font-outfit italic text-sm">
+                  Connect your existing wallet instantly
+                </span>
               </li>
-              <li>
+              <li className="flex gap-2 items-center">
                 {" "}
-                <span>
+                <span className="text-accent-blue font-bold">
                   <IoMdCheckmark />
                 </span>
-                <span>AI-powered insights into real-time market trends</span>
+                <span className="text-accent-green font-outfit italic text-sm">
+                  AI-powered insights into real-time market trends
+                </span>
               </li>
-              <li>
-                <span>
+              <li className="flex gap-2 items-center">
+                <span className="text-accent-blue font-bold">
                   <IoMdCheckmark />
                 </span>
-                <span>Create a secure new wallet in seconds</span>
+                <span className="text-accent-green font-outfit text-sm italic">
+                  Create a secure new wallet in seconds
+                </span>
               </li>
-              <li>
-                <span>
+              <li className="flex gap-2 items-center">
+                <span className="text-accent-blue font-bold">
                   <IoMdCheckmark />
                 </span>
-                <span>Live market charts and analytics</span>{" "}
+                <span className="text-accent-green font-outfit text-sm italic">
+                  Live market charts and analytics
+                </span>{" "}
               </li>
-              <li>
-                <span>
+              <li className="flex gap-2 items-center">
+                <span className="text-accent-blue font-bold">
                   <IoMdCheckmark />
                 </span>{" "}
-                <span>Instant buy/sell execution with low latency</span>
+                <span className="text-accent-green font-outfit italic text-sm">
+                  Instant buy/sell execution with low latency
+                </span>
               </li>
             </ul>
 
-            <Link href="/signup">Get Started</Link>
+            <Link
+              className="max-w-[150px] flex justify-center mt-[20px] font-bold text-text-secondary text-base font-nunito-sans border-3 font-bold hover:scale-[1.05] border border-[var(--color-border)] py-[5px] transition px-[20px]"
+              href="/signup"
+            >
+              Get Started
+            </Link>
           </div>
           {/* image */}
-          <div>
-            <Image src="/crpto3.avif" alt="" width={100} height={100} />
+          <div className="lg:w-[60%]">
+            <Image
+              src="/crpto.png"
+              alt=""
+              width={1000}
+              height={1000}
+              style={{ width: "500px", height: "350px" }}
+            />
           </div>
         </div>
       </div>
