@@ -67,7 +67,7 @@ function Mainhome() {
         <div className=" mt-[20px] lg:mt-[40px] lg:flex justify-between items-center">
           {/* body text */}
           <div className="w-[100%] lg:w-[70%] flex flex-col">
-            <h2 className="w-[100%] text-center lg:max-w-[500px] font-outfit text-text-secondary text-2xl lg:text-5xl font-bold">
+            <h2 className="w-[100%] text-center lg:max-w-[500px] lg:text-left font-outfit text-text-secondary text-2xl lg:text-5xl font-bold">
               Trade Smarter. Faster. With AI-Driven Precision.
             </h2>
             <p className="mt-[15px] font-nunito-sans text-text-primary text-base max-w-[450px] font-semibold">
