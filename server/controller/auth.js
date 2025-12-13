@@ -78,7 +78,16 @@ export const loginUser = async (req, res) => {
       maxAge: 3600000,
     });
 
-    res.status(200).json({ success: true, message: "Login successful", token });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+      },
+      token,
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -86,14 +95,14 @@ export const loginUser = async (req, res) => {
 
 export const verifyOtp = async (req, res) => {
   try {
-    const { otp, userId } = req.body;
+    const { userId, otp } = req.body;
 
     if (!userId || !otp) {
       return res
         .status(400)
         .json({ success: false, message: "Email and otp are required" });
     }
-    const user = await userModel.findOne(userId);
+    const user = await userModel.findById(userId);
     if (!user) {
       return res
         .status(404)

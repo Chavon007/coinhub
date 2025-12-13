@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/create-account", createAccount);
 router.post("/login", loginUser);
-router.post("verify-otp", verifyOtp);
+router.post("/verify-otp", verifyOtp);
 
 export default router;
