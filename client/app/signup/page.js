@@ -59,7 +59,7 @@ function Signup() {
       setSuccess("Account created successfully");
       setLoading(false);
       setTimeout(() => {
-        window.location.href = "/signup";
+        window.location.href = "/signup-otp";
       }, 1000);
       console.log(res);
     } catch (err) {

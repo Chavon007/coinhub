@@ -9,7 +9,7 @@ function AuthProvider({ children }) {
   //signup
   const signup = async (data) => {
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:4000/api/create-account", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function AuthProvider({ children }) {
   // login api
   const login = async (data) => {
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:4000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function AuthProvider({ children }) {
   const verifyOtp = async (otp) => {
     const userId = localStorage.getItem("pendingUserId");
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:4000/api/verify-otp", {
         method: "POST",
         credentials: "include",
         headers: {
