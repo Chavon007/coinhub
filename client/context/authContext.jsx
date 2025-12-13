@@ -51,8 +51,32 @@ function AuthProvider({ children }) {
       throw err;
     }
   };
+
+  // verify otgp after creating an account
+
+  const verifyOtp = async (data) => {
+    try {
+      const res = await fetch("", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.message || "Can't verify account now");
+      }
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
   return (
-    <AuthContext.Provider value={{ user, signup, login }}>
+    <AuthContext.Provider value={{ user, signup, login, verifyOtp }}>
       {" "}
       {children}
     </AuthContext.Provider>

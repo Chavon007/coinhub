@@ -71,19 +71,58 @@ export const loginUser = async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.cookie(token, "token", {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "lax",
       maxAge: 3600000,
     });
 
-    res
-      .status(200)
-      .json({ success: false, message: "Login successful", token });
+    res.status(200).json({ success: true, message: "Login successful", token });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const verifyOtp = async (req, res) => {
+  try {
+    const { otp, email } = req.body;
+
+    if (!email || !otp) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email and otp are required" });
+    }
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    if (user.otp !== otp) {
+      return res.status(401).json({ success: false, message: "Incorrect OTP" });
+    }
+
+    if (user.otpExpires < Date.now()) {
+      return res
+        .status(400)
+        .json({ success: false, message: "OTP has expired" });
+    }
+
+    user.isVerified = true;
+    user.otp = null;
+    user.otpExpires = null;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "OTP Correct and account has been verified",
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
 
 // forget password
+
+
