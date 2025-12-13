@@ -21,8 +21,7 @@ function AuthProvider({ children }) {
       if (!res.ok) {
         throw new Error(result.message || "Signup failed");
       }
-      setUser(result.user);
-      return result;
+      localStorage.setItem("pendingUserId", result.userId);
     } catch (err) {
       console.log(err);
       throw err;
@@ -54,7 +53,8 @@ function AuthProvider({ children }) {
 
   // verify otgp after creating an account
 
-  const verifyOtp = async (data) => {
+  const verifyOtp = async (otp) => {
+    const userId = localStorage.getItem("pendingUserId");
     try {
       const res = await fetch("", {
         method: "POST",
@@ -62,13 +62,17 @@ function AuthProvider({ children }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          userId,
+          otp,
+        }),
       });
 
       const result = await res.json();
       if (!res.ok) {
         throw new Error(result.message || "Can't verify account now");
       }
+      localStorage.removeItem("pendingUserId");
       return result;
     } catch (err) {
       console.log(err);

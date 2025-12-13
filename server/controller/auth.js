@@ -86,14 +86,14 @@ export const loginUser = async (req, res) => {
 
 export const verifyOtp = async (req, res) => {
   try {
-    const { otp, email } = req.body;
+    const { otp, userId } = req.body;
 
-    if (!email || !otp) {
+    if (!userId || !otp) {
       return res
         .status(400)
         .json({ success: false, message: "Email and otp are required" });
     }
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne(userId);
     if (!user) {
       return res
         .status(404)
@@ -124,5 +124,3 @@ export const verifyOtp = async (req, res) => {
 };
 
 // forget password
-
-
