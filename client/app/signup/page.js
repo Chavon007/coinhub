@@ -2,6 +2,7 @@
 import { FaBitcoin } from "react-icons/fa6";
 import { useState } from "react";
 import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 function Signup() {
   const { signup } = useAuth();
@@ -84,6 +85,15 @@ function Signup() {
             </span>
             <span>Create an account to get started</span>
           </h3>
+          <p className=" flex justify-center items-center mb-[10px] text-[#E5E7EB] font-outfit text-sm">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-[#1E90FF] text-xs ml-[2px] italic "
+            >
+              Click here
+            </Link>
+          </p>
           <form
             className="w-[100%] lg:w-[60%] mx-auto py-[30px] flex flex-col bg-[#121826] p-[10px] gap-3 border border-[#1F2937] border-3"
             onSubmit={handleSubmit}
