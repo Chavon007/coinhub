@@ -19,7 +19,10 @@ function Choose() {
         </div>
         <div className=" w-[95%] flex flex-col justify-center items-center p-[5px] mx-auto">
           <div className="cursor-pointer hover:scale-[1.05] hover:border-[#1E90FF] hover:border-1 transition mb-[20px] border border-[#1F2937] border-2 w-[100%] md:max-w-[500px] p-[25px] bg-surface">
-            <Link href="" className="flex justify-between items-center">
+            <Link
+              href="/connectwallet"
+              className="flex justify-between items-center"
+            >
               <div className="flex flex-col">
                 <span className="text-roboto font-semibold text-text-secondary text-2xl">
                   Connect Existing Wallet
@@ -34,7 +37,10 @@ function Choose() {
             </Link>
           </div>
           <div className=" cursor-pointer hover:scale-[1.05] hover:border-[#1E90FF] hover:border-1 transition border border-[#1F2937] border-2 w-[100%] max-w-[500px] p-[25px] bg-surface">
-            <Link href="" className="flex justify-between items-center">
+            <Link
+              href="/newwallet"
+              className="flex justify-between items-center"
+            >
               <div className="flex flex-col">
                 <span className="text-roboto font-semibold text-text-secondary text-2xl">
                   Create New Wallet
