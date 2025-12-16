@@ -7,6 +7,8 @@ import * as bitcoin from "bitcoinjs-lib";
 import { Keypair } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import * as ecc from "tiny-secp256k1";
+import Image from "next/image";
+import { FaPlus } from "react-icons/fa6";
 
 // Init bitcoin ecc + bip32
 bitcoin.initEccLib(ecc);
@@ -91,11 +93,14 @@ function WalletCreation() {
         {!wallet && (
           <div className=" w-[20%]  p-[8px] mt-[20px]">
             <button
-              className="bg-accent-blue cursor-pointer hover:bg-blue-600 hover:scale-[1.05] transition text-base font-roboto p-[10px] w-[150px] rounded rounded-2xl text-text-primary font-semibold"
+              className="bg-accent-blue flex items-center cursor-pointer hover:bg-blue-600 hover:scale-[1.05] transition text-base font-roboto p-[10px] w-[180px] justify-between rounded rounded-2xl text-text-primary font-semibold"
               onClick={createWallet}
               disabled={loading}
             >
-              {loading ? "Generating..." : "Create Wallet"}
+              <span>{loading ? "Generating..." : "Create Wallet"}</span>{" "}
+              <span>
+                <FaPlus />
+              </span>
             </button>
           </div>
         )}
@@ -137,8 +142,17 @@ function WalletCreation() {
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Ethereum */}
               <div className="bg-[#121826] border border-[#1F2937] rounded-xl p-5 space-y-3">
-                <h4 className="text-base font-semibold text-text-secondary font-orbitron">
-                  Ethereum (ETH)
+                <h4 className=" flex items-center gap-1 text-base font-semibold text-text-secondary font-orbitron">
+                  <span> Ethereum (ETH)</span>{" "}
+                  <span>
+                    <Image
+                      src="/eth.png"
+                      alt="ethereum"
+                      width={40}
+                      height={30}
+                      className="rounded rounded-3xl p-[10px]"
+                    />
+                  </span>
                 </h4>
                 <p className="text-sm text-text-primary font-outfit italic">
                   Also works for Polygon, BSC, Arbitrum
@@ -158,8 +172,18 @@ function WalletCreation() {
 
               {/* Bitcoin */}
               <div className="bg-[#121826] border border-[#1F2937] rounded-xl p-5 space-y-3">
-                <h4 className="text-base font-semibold text-text-secondary font-orbitron">
-                  Bitcoin (BTC)
+                <h4 className=" flex gap-1 items-center text-base font-semibold text-text-secondary font-orbitron">
+                  <span> Bitcoin (BTC)</span>
+
+                  <span>
+                    <Image
+                      src="/btc.png"
+                      alt="bitcoin"
+                      width={40}
+                      height={40}
+                      className="rounded rounded-3xl p-[10px]"
+                    />
+                  </span>
                 </h4>
                 <p className="text-sm text-text-primary font-outfit italic">
                   Native SegWit (Bech32)
@@ -179,8 +203,17 @@ function WalletCreation() {
 
               {/* Solana */}
               <div className="bg-[#121826] border border-[#1F2937] rounded-xl p-5 space-y-3">
-                <h4 className="text-base font-semibold text-text-secondary font-orbitron">
-                  Solana (SOL)
+                <h4 className="flex items-center gap-1 text-base font-semibold text-text-secondary font-orbitron">
+                  <span>Solana (SOL)</span>
+                  <span>
+                    <Image
+                      src="/sol.jpeg"
+                      alt="solana"
+                      width={40}
+                      height={30}
+                      className="rounded rounded-3xl p-[10px]"
+                    />
+                  </span>
                 </h4>
                 <p className="text-sm text-text-primary font-outfit italic">
                   Base58 encoded
@@ -200,8 +233,18 @@ function WalletCreation() {
 
               {/* Ripple */}
               <div className="bg-[#121826] border border-[#1F2937] rounded-xl p-5 space-y-3">
-                <h4 className="text-base font-semibold text-text-secondary font-orbitron  ">
-                  Ripple (XRP)
+                <h4 className="flex gap-1 items-center text-base font-semibold text-text-secondary font-orbitron  ">
+                  <span>Ripple (XRP)</span>
+
+                  <span>
+                    <Image
+                      src="/xrp.png"
+                      alt="ripple xrp"
+                      width={40}
+                      height={30}
+                      className="rounded rounded-3xl p-[10px]"
+                    />
+                  </span>
                 </h4>
                 <p className="text-sm text-text-primary font-outfit italic">
                   Simplified format (for demo)
