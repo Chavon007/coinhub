@@ -5,6 +5,7 @@ import cors from "cors";
 import dbConfig from "./config/database.js";
 
 import authRoutes from "./route/auth.js";
+import walletRoute from "./route/wallet.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 const PORT = 4000;
 
 app.use("/api", authRoutes);
+app.use("/api", walletRoute);
 app.get("/", (req, res) => {
   res.send("ConinHub backend is running");
 });

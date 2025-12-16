@@ -1,4 +1,4 @@
-import { verifyToken } from "../utliz/token";
+import { verifyToken } from "../utliz/token.js";
 
 export const authMiddleware = async (req, res, next) => {
   try {
