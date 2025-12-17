@@ -7,6 +7,7 @@ import dbConfig from "./config/database.js";
 import marketMoverRoute from "./route/marketroute.js";
 import authRoutes from "./route/auth.js";
 import walletRoute from "./route/wallet.js";
+import aiInsightRoute from "./route/insightroute.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 const PORT = 4000;
 
 app.use("/api", authRoutes);
+app.use("/api", aiInsightRoute);
 app.use("/api", walletRoute);
 app.use("/api", marketMoverRoute);
 app.get("/", (req, res) => {
