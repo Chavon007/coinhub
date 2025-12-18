@@ -1,5 +1,6 @@
 import Balance from "../model/walletbalance.js";
 
+import { getPortfolioChangeService } from "../services/marketservice.js";
 // Get balnace for coin
 
 export const getEachCoinBalance = async (req, res) => {
@@ -7,18 +8,11 @@ export const getEachCoinBalance = async (req, res) => {
     const walletId = req.user.walletId;
 
     const balanceCoin = await Balance.find({ walletId });
-    if (balanceCoin.length === 0) {
-      return res
-        .status(400)
-        .json({ succces: false, message: "no balance found" });
-    }
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Balnace fetched successfully",
-        balanceCoin,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Balnace fetched successfully",
+      balanceCoin: balanceCoin || [],
+    });
   } catch (err) {
     res
       .status(500)
@@ -35,9 +29,11 @@ export const CoinBalance = async (req, res) => {
 
     const mainBalance = await Balance.findOne({ walletId, coin });
     if (!mainBalance) {
-      return res
-        .status(404)
-        .json({ success: false, message: "No balance found" });
+      return res.status(404).json({
+        success: false,
+        message: "No balance found",
+        mainBalance: { coin, amount: 0 },
+      });
     }
     res
       .status(200)
@@ -61,19 +57,23 @@ export const getTotalBalance = async (req, res) => {
         },
       },
     ]);
-    if (totalbalance.length === 0) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No Balance found" });
-    }
+    const totalAmount =
+      totalbalance.length > 0 ? totalbalance[0].totalAmount : 0;
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Total balance fetched",
-        totalbalance: totalbalance[0].totalAmount,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Total balance fetched",
+      totalAmount,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const getPortfolioChangeController = async (req, res) => {
+  try {
+    const PortfolioChange = await getPortfolioChangeService(req.user.walletId);
+    res.status(200).json({ success: true, ...PortfolioChange });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
