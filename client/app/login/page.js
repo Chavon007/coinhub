@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { FaBitcoin } from "react-icons/fa6";
 import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 function Login() {
+  const router = useRouter();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
@@ -28,7 +30,7 @@ function Login() {
       setSuccess("Login successfull");
       setLoading(false);
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        router.push("/dashboard");
       }, 1000);
       console.log(res);
     } catch (err) {
