@@ -3,9 +3,9 @@ import {
   getEachCoinBalance,
   CoinBalance,
   getTotalBalance,
-} from "../controller/walletbalance";
+} from "../controller/walletbalance.js";
 
-import { authMiddleware } from "../middleware/authMiddleware";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 

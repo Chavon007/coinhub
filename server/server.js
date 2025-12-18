@@ -8,6 +8,7 @@ import marketMoverRoute from "./route/marketroute.js";
 import authRoutes from "./route/auth.js";
 import walletRoute from "./route/wallet.js";
 import aiInsightRoute from "./route/insightroute.js";
+import walletbalanceRoute from "./route/walletbalance.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/api", authRoutes);
 app.use("/api", aiInsightRoute);
 app.use("/api", walletRoute);
 app.use("/api", marketMoverRoute);
+app.use("/api", walletbalanceRoute);
 app.get("/", (req, res) => {
   res.send("ConinHub backend is running");
 });
