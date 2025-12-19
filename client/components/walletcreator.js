@@ -27,7 +27,9 @@ function WalletCreation() {
       const data = await getWallet();
       setWallet(data);
     } catch (err) {
-      setError(err);
+      if (err.message !== "Wallet does not exist") {
+        setError(err.message || "Failed to fetch wallet");
+      }
     } finally {
       setLoading(false);
     }
@@ -78,7 +80,8 @@ function WalletCreation() {
         mnemonic,
       };
 
-      await newCreateWallet(walletData);
+      const createdWallet = await newCreateWallet(walletData);
+      setWallet(createdWallet);
     } catch (err) {
       console.error("Wallet creation error:", err);
       setError(err.message || "Failed to create wallet");

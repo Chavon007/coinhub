@@ -5,9 +5,9 @@ import User from "../model/auth.js";
 export const createWallet = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { ethereum, bitcoin, solana, ripple } = req.body;
+    const { ethereum, bitcoin, solana, ripple, mnemonic } = req.body;
 
-    if (!ethereum || !bitcoin || !solana || !ripple) {
+    if (!ethereum || !bitcoin || !solana || !ripple || !mnemonic) {
       return res
         .status(400)
         .json({ success: false, message: "Miising wallet data" });
@@ -26,9 +26,10 @@ export const createWallet = async (req, res) => {
       bitcoin,
       solana,
       ripple,
+      mnemonic,
     });
 
-    await User.findByIdAndUpdate(userId, { walletId: newWallet, _id });
+    await User.findByIdAndUpdate(userId, { walletId: newWallet._id });
     res.status(200).json({
       success: true,
       message: "Wallet created successfully",
@@ -38,6 +39,7 @@ export const createWallet = async (req, res) => {
         solana: newWallet.solana,
         ripple: newWallet.ripple,
         userId: newWallet.userId,
+        mnemonic: newWallet.mnemonic,
       },
     });
   } catch (err) {
@@ -51,16 +53,16 @@ export const getWallet = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const user = await Wallet.findOne({ userId });
-    if (!user) {
+    const wallet = await Wallet.findOne({ userId });
+    if (!wallet) {
       return res
         .status(404)
-        .json({ success: false, message: "User does not exist" });
+        .json({ success: false, message: "Wallet does not exist" });
     }
     res.status(200).json({
       success: true,
       message: "Wallet fetched successfully",
-      wallet: user,
+      wallet,
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Failed to get Wallet" });
