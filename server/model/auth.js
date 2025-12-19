@@ -16,13 +16,11 @@ const userSchema = new mongoose.Schema(
     otpExpires: { type: Date },
     forgetPassword: { type: String },
     resetPassword: { type: String },
-    wallets: [
-      {
-        address: { type: String, required: true },
-        balance: { type: Number, default: 0 },
-        network: { type: String, default: "Ethereum" },
-      },
-    ],
+    walletId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "wallet",
+      default: null,
+    },
     watchlist: [{ coinId: { type: String }, alertPrice: { type: Number } }],
     portfolio: [
       {

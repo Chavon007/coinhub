@@ -1,5 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
+import WalletProvider from "@/context/walletContext";
 
 const WalletCreation = dynamic(() => import("@/components/walletcreator"), {
   ssr: false,
@@ -7,9 +8,11 @@ const WalletCreation = dynamic(() => import("@/components/walletcreator"), {
 });
 function Newwallet() {
   return (
-    <div className="container mx-auto bg-background w-[100%]  min-h-screen p-[10px]">
-      <WalletCreation />
-    </div>
+    <WalletProvider>
+      <div className="container mx-auto bg-background w-[100%]  min-h-screen p-[10px]">
+        <WalletCreation />
+      </div>
+    </WalletProvider>
   );
 }
 

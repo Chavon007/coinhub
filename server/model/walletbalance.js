@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const balanceShema = new mongoose.Schema({
   walletId: {
-    type: new mongoose.Schema.ObjectId(),
+    type: mongoose.Schema.ObjectId,
     ref: "wallet",
     required: true,
   },

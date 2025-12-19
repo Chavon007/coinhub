@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const walletSchema = new mongoose.Schema({
   userId: {
-    type: new mongoose.Schema.Types.ObjectId(),
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
+    unique: true,
   },
   ethereum: {
     type: String,

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useWallet } from "@/context/walletContext";
 import { ethers } from "ethers";
 import * as bip39 from "bip39";
 import * as bip32 from "bip32";
@@ -15,9 +16,26 @@ bitcoin.initEccLib(ecc);
 const bip32Factory = bip32.BIP32Factory(ecc);
 
 function WalletCreation() {
+  const { newCreateWallet, getWallet } = useWallet();
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const fetchWallet = async () => {
+    setLoading(true);
+    try {
+      const data = await getWallet();
+      setWallet(data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWallet();
+  }, []);
 
   const createWallet = async () => {
     try {
@@ -52,19 +70,19 @@ function WalletCreation() {
       const xrpPubKey = xrpChild.publicKey.toString("hex");
       const xrpAddress = `r${xrpPubKey.slice(0, 33)}`;
 
-      // Save wallet data
-      setWallet({
-        mnemonic,
+      const walletData = {
         ethereum: ethWallet.address,
         bitcoin: btcAddress || "Error generating BTC address",
         solana: solAddress,
         ripple: xrpAddress,
-      });
+        mnemonic,
+      };
 
-      setLoading(false);
+      await newCreateWallet(walletData);
     } catch (err) {
       console.error("Wallet creation error:", err);
       setError(err.message || "Failed to create wallet");
+    } finally {
       setLoading(false);
     }
   };
@@ -73,6 +91,9 @@ function WalletCreation() {
     navigator.clipboard.writeText(text);
     alert("Copied to clipboard!");
   };
+
+  if (loading && !wallet)
+    return <p className="text-center mt-10">Loading...</p>;
 
   return (
     <div className="h-auto">

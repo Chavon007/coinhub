@@ -78,8 +78,10 @@ export const loginUser = async (req, res) => {
       maxAge: 3600000,
     });
 
+    const hasWallet = !!user.walletId;
     res.status(200).json({
       success: true,
+      hasWallet,
       message: "Login successful",
       user: {
         id: user._id,

@@ -30,8 +30,12 @@ function Login() {
       setSuccess("Login successfull");
       setLoading(false);
       setTimeout(() => {
-        router.push("/dashboard");
-      }, 1000);
+        if (!res.hasWallet) {
+          router.replace("/choosewallet");
+        } else {
+          router.replace("/dashboard");
+        }
+      }, 500);
       console.log(res);
     } catch (err) {
       setError("Failed to login" || err);
