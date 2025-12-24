@@ -4,6 +4,7 @@ import TotalBalance from "@/components/totalbalance";
 import { useWallet } from "@/context/walletContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import AiInsightCard from "@/components/insightcard";
 
 function Dashboard() {
   const router = useRouter();
@@ -29,6 +30,7 @@ function Dashboard() {
           Dashboard
         </h2>
         <TotalBalance />
+        <AiInsightCard />
       </div>
     </div>
   );
