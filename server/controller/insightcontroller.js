@@ -31,3 +31,14 @@ export const getAIInsight = async (req, res) => {
     });
   }
 };
+export const generalNews = async (req, res) => {
+  try {
+    const news = await fetchCryptoNews();
+    const newsInsight = await generateAIInsight(news);
+    res
+      .status(200)
+      .json({ success: true, message: "News fetched",  newsInsight });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to get News" });
+  }
+};

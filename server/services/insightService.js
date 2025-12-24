@@ -8,13 +8,15 @@ const groqai = new OpenAI({
 
 export const fetchCryptoNews = async (coin) => {
   try {
+    const params = { auth_token: process.env.CRYPTOPANIC_API_KEY };
+
+    if (coin) {
+      params.currencies = coin.toUpperCase();
+    }
     const { data } = await axios.get(
       "https://cryptopanic.com/api/developer/v2/posts/",
       {
-        params: {
-          auth_token: process.env.CRYPTOPANIC_API_KEY,
-          currencies: coin.toUpperCase(),
-        },
+        params,
         timeout: 10000,
       }
     );
@@ -36,10 +38,12 @@ export const fetchCryptoNews = async (coin) => {
   }
 };
 
-export const generateAIInsight = async (coin, news) => {
+export const generateAIInsight = async (news, coin = null) => {
   try {
     if (!news.length) {
-      return `There is currently no major news affecting ${coin}. Market movement is likely driven by technical factors.`;
+      return coin
+        ? `There is currently no major news affecting ${coin}. Market movement is likely driven by technical factors.`
+        : "There is currently no major crypto news affecting the market. Movement is likely driven by technical factors.";
     }
 
     const text = news
@@ -49,19 +53,38 @@ export const generateAIInsight = async (coin, news) => {
       )
       .join("\n");
 
-    const prompt = `
+    const prompt = coin
+      ? `
 Analyze the following crypto news about ${coin}.
-Return a short, beginner-friendly market insight (1–2 sentences).
+Return a short AI insight (1–2 sentences) for each headline in the following JSON format:
 
-Recent News:
+[
+  { "headline": "Headline 1", "insight": "Insight 1" },
+  { "headline": "Headline 2", "insight": "Insight 2" }
+]
+
+News:
 ${text}
+
+`  : `
+You are a crypto market analyst.
+
+Here are recent crypto news headlines:
+${text}
+
+Please provide your output in JSON format like this:
+
+[
+  { "headline": "Headline 1", "insight": "Insight 1" },
+  { "headline": "Headline 2", "insight": "Insight 2" },
+  ...
+]
 `;
 
-    // Changed from openai to groqai
     const response = await groqai.chat.completions.create({
-      model: "llama-3.3-70b-versatile", // Changed to Groq model
+      model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 120,
+      max_tokens: 500,
     });
 
     return response.choices[0].message.content.trim();

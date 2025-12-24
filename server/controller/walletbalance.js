@@ -72,6 +72,17 @@ export const getTotalBalance = async (req, res) => {
 
 export const getPortfolioChangeController = async (req, res) => {
   try {
+    const walletId = req.user.walletId;
+    const balance = await Balance.find({ walletId });
+    if (!balance || balance.length === 0) {
+      return res.status(200).json({
+        success: true,
+        totalValue: 0,
+        change24h: 0,
+        changePercentage: 0,
+        message: "No balances found",
+      });
+    }
     const PortfolioChange = await getPortfolioChangeService(req.user.walletId);
     res.status(200).json({ success: true, ...PortfolioChange });
   } catch (err) {
