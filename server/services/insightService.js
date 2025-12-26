@@ -1,5 +1,6 @@
 import axios from "axios";
 import OpenAI from "openai";
+// import { getCache, setCache } from "../utliz/cache.js";
 
 const groqai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
@@ -7,6 +8,12 @@ const groqai = new OpenAI({
 });
 
 export const fetchCryptoNews = async (coin) => {
+  // const cacheKey = coin ? `news_${coin}` : "news_general";
+  // const cached = getCache(cacheKey);
+  // if (cached) {
+  //   console.log("Returning cached crypto  news");
+  //   return cached;
+  // }
   try {
     const params = { auth_token: process.env.CRYPTOPANIC_API_KEY };
 
@@ -17,7 +24,7 @@ export const fetchCryptoNews = async (coin) => {
       "https://cryptopanic.com/api/developer/v2/posts/",
       {
         params,
-        timeout: 10000,
+        timeout: 30000,
       }
     );
 
@@ -25,13 +32,16 @@ export const fetchCryptoNews = async (coin) => {
       return [];
     }
 
-    return data.results.slice(0, 7).map((item) => ({
+    const result = data.results.slice(0, 7).map((item) => ({
       title: item.title,
       description: item.description || item.title,
       url: item.slug ? `https://cryptopanic.com/news/${item.slug}` : "#",
       published_at: item.published_at,
       kind: item.kind,
     }));
+
+    // setCache(cacheKey, result, 60 * 1000);
+    return result;
   } catch (err) {
     console.error("Full error:", err.response?.data || err);
     throw new Error("Failed to fetch crypto news");

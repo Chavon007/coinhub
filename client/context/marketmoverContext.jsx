@@ -26,6 +26,9 @@ function MarketMoverProvider({ children }) {
   };
   useEffect(() => {
     getMarketMover();
+
+    const interval = setInterval(getMarketMover, 60000);
+    return () => clearInterval(interval);
   }, []);
   return (
     <MarketMoverContext.Provider value={{ movers, getMarketMover }}>

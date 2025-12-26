@@ -11,6 +11,7 @@ function AiInsightCard() {
 
   const getNews = async () => {
     setLoading(true);
+    setError("");
     try {
       const data = await getNewsInsight();
       setNews(data.slice(0, 3));
@@ -32,19 +33,19 @@ function AiInsightCard() {
       <div className="flex flex-col p-2">
         {error && <p className="text-accent-red">{error}</p>}
         {/* header */}
-        <div className="w-[20%] p-[5px] ">
+        <div className="lg:w-[20%] p-[5px] ">
           <h3 className="flex gap-3 items-center">
             <span className="text-text-secondary text-2xl">
               <FaNewspaper />
             </span>
-            <span className="text-text-secondary text-1xl font-roboto font-bold">
+            <span className="text-text-secondary text-2xl lg:text-1xl font-roboto font-bold">
               Ai Insights
             </span>
           </h3>
         </div>
         {/* news */}
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {news.map((n, index) => (
             <div
               key={index}

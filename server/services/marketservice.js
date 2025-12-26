@@ -1,9 +1,17 @@
 import axios from "axios";
+// import { getCache, setCache} from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 
 export const fetchMarketMovers = async () => {
+  // const cacheKey = "marketMovers";
+  // const cached = getCache(cacheKey);
+  // if (cached) {
+   
+  //   return cached;
+  // }
+
   try {
     const { data } = await axios.get(`${COINGECKO_API_URL}/coins/markets`, {
       params: {
@@ -14,10 +22,10 @@ export const fetchMarketMovers = async () => {
         price_change_percentage: "24h",
         // sparkline: true,
       },
-      timeout: 10000,
+      timeout: 30000,
     });
 
-    return data.map((coin) => ({
+    const result = data.map((coin) => ({
       id: coin.id,
       name: coin.name,
       symbol: coin.symbol,
@@ -26,6 +34,9 @@ export const fetchMarketMovers = async () => {
       change24h: coin.price_change_percentage_24h,
       marketCap: coin.market_cap,
     }));
+    // setCache(cacheKey, result, 60 * 1000);
+    // console.log("Market movers cache updated");
+    return result;
   } catch (err) {
     console.error(err.message);
     throw new Error(err.message || "Failed to fetch market movers");

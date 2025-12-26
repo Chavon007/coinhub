@@ -15,6 +15,7 @@ function TotalBalance() {
 
   const fetchTotalBalance = async () => {
     setLoadingBalance(true);
+    setError("");
     try {
       const data = await totalBalance();
       setBalance(data.totalAmount);
@@ -62,7 +63,7 @@ function TotalBalance() {
               </h5>
               <p className=" p-[1px]">
                 <span className="text-accent-green text-xs font-outfit">
-                  {portfolio?.totalValue || 0}
+                  {portfolio?.totalValue || (0).toFixed(2)}%
                 </span>{" "}
                 <span className="text-text-secondary text-xs italic font-nunito-sans">
                   Last 24h

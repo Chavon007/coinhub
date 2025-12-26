@@ -44,7 +44,7 @@ function Login() {
     }
   };
   return (
-    <div className="container mx-auto bg-background h-[100vh] pb-[20px] w-full">
+    <div className="container mx-auto bg-background min-h-screen pb-[20px] w-full">
       <div className="w-[90%] mx-auto h-auto flex flex-col gap-2">
         <div className="w-[20%] p-[10px] mt-[10px]">
           <h1 className="font-orbitron text-3xl bold text-text-secondary">
