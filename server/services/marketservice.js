@@ -12,7 +12,7 @@ export const fetchMarketMovers = async () => {
         per_page: 10,
         page: 1,
         price_change_percentage: "24h",
-        sparkline: true,
+        // sparkline: true,
       },
       timeout: 10000,
     });

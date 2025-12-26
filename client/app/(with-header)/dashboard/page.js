@@ -5,6 +5,7 @@ import { useWallet } from "@/context/walletContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import AiInsightCard from "@/components/insightcard";
+import MarketMover from "@/components/marketmover";
 
 function Dashboard() {
   const router = useRouter();
@@ -31,6 +32,7 @@ function Dashboard() {
         </h2>
         <TotalBalance />
         <AiInsightCard />
+        <MarketMover />
       </div>
     </div>
   );
