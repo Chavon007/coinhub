@@ -28,25 +28,50 @@ function AiInsightCard() {
     return <p>Loading....</p>;
   }
   return (
-    <div>
-      <div>
+    <div className="bg-surface mt-[30px] w-[98%] mx-auto p-[10px] rounded rounded-2 border border-1 border-border">
+      <div className="flex flex-col p-2">
         {error && <p className="text-accent-red">{error}</p>}
         {/* header */}
-        <div>
-          <h3>
-            <span>
+        <div className="w-[20%] p-[5px] ">
+          <h3 className="flex gap-3 items-center">
+            <span className="text-text-secondary text-2xl">
               <FaNewspaper />
             </span>
-            <span>Ai Insights</span>
+            <span className="text-text-secondary text-1xl font-roboto font-bold">
+              Ai Insights
+            </span>
           </h3>
         </div>
         {/* news */}
 
-        <div>
+        <div className="grid grid-cols-3 gap-4">
           {news.map((n, index) => (
-            <div key={index}>
-              <h4>{n.headline}</h4>
-              <p>{n.insight}</p>
+            <div
+              key={index}
+              className="bg-background rounded-2xl p-4 transition cursor-pointer hover:scale-[1.03]
+                 flex flex-col h-[180px]"
+            >
+              {/* Headline */}
+              <h4 className="flex flex-col gap-1">
+                <span className="block text-xs font-orbitron text-text-secondary">
+                  Headline
+                </span>
+
+                <span
+                  className="text-sm italic font-semibold font-outfit text-text-primary
+                     line-clamp-2"
+                >
+                  {n.headline}
+                </span>
+              </h4>
+
+              {/* Insight */}
+              <p
+                className="text-xs font-semibold font-nunito-sans text-text-secondary
+                   line-clamp-4 mt-[20px]"
+              >
+                {n.insight}
+              </p>
             </div>
           ))}
         </div>
