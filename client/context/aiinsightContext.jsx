@@ -27,6 +27,9 @@ function AIinsightProvider({ children }) {
   };
   useEffect(() => {
     getNewsInsight();
+
+    const interval = setInterval(getNewsInsight, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (

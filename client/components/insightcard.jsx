@@ -1,37 +1,14 @@
 "use client";
-import { useAiInsight } from "@/context/aiinsightContent";
-import { useState, useEffect } from "react";
+import { useAiInsight } from "@/context/aiinsightContext";
 import { FaNewspaper } from "react-icons/fa";
 
 function AiInsightCard() {
-  const { getNewsInsight } = useAiInsight();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [news, setNews] = useState([]);
+  const { news } = useAiInsight();
+  const topNews = news?.slice(0, 3) || [];
 
-  const getNews = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const data = await getNewsInsight();
-      setNews(data.slice(0, 3));
-    } catch (err) {
-      setError("Can't fetch news now");
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getNews();
-  }, []);
-
-  if (loading) {
-    return <p>Loading....</p>;
-  }
   return (
     <div className="bg-surface mt-[30px] w-[98%] mx-auto p-[10px] rounded rounded-2 border border-1 border-border">
       <div className="flex flex-col p-2">
-        {error && <p className="text-accent-red">{error}</p>}
         {/* header */}
         <div className="lg:w-[20%] p-[5px] ">
           <h3 className="flex gap-3 items-center">
@@ -46,7 +23,7 @@ function AiInsightCard() {
         {/* news */}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {news.map((n, index) => (
+          {topNews.map((n, index) => (
             <div
               key={index}
               className="bg-background rounded-2xl p-4 transition cursor-pointer hover:scale-[1.03]

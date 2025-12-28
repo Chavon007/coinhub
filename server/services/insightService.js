@@ -1,6 +1,7 @@
 import axios from "axios";
 import OpenAI from "openai";
-// import { getCache, setCache } from "../utliz/cache.js";
+import { cryptoPanicLimiter, groqLimiter } from "../utliz/rateLimiter.js";
+import { getCache, setCache } from "../utliz/cache.js";
 
 const groqai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,
@@ -8,24 +9,23 @@ const groqai = new OpenAI({
 });
 
 export const fetchCryptoNews = async (coin) => {
-  // const cacheKey = coin ? `news_${coin}` : "news_general";
-  // const cached = getCache(cacheKey);
-  // if (cached) {
-  //   console.log("Returning cached crypto  news");
-  //   return cached;
-  // }
+  const cacheKey = coin ? `news_${coin}` : "news_general";
+  const cached = getCache(cacheKey);
+  if (cached) {
+    console.log("Returning cached crypto  news");
+    return cached;
+  }
   try {
     const params = { auth_token: process.env.CRYPTOPANIC_API_KEY };
 
     if (coin) {
       params.currencies = coin.toUpperCase();
     }
-    const { data } = await axios.get(
-      "https://cryptopanic.com/api/developer/v2/posts/",
-      {
+    const { data } = await cryptoPanicLimiter.execute(() =>
+      axios.get("https://cryptopanic.com/api/developer/v2/posts/", {
         params,
         timeout: 30000,
-      }
+      })
     );
 
     if (!data.results || data.results.length === 0) {
@@ -40,7 +40,7 @@ export const fetchCryptoNews = async (coin) => {
       kind: item.kind,
     }));
 
-    // setCache(cacheKey, result, 60 * 1000);
+    setCache(cacheKey, result, 60 * 1000);
     return result;
   } catch (err) {
     console.error("Full error:", err.response?.data || err);
@@ -90,19 +90,21 @@ Format:
   { "headline": "Headline 2", "insight": "Insight 2" }
 ]`;
 
-    const response = await groqai.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
-        },
-        { role: "user", content: prompt },
-      ],
-      max_tokens: 1000,
-      temperature: 0.3,
-    });
+    const response = await groqLimiter.execute(() =>
+      groqai.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
+          },
+          { role: "user", content: prompt },
+        ],
+        max_tokens: 1000,
+        temperature: 0.3,
+      })
+    );
 
     let insights;
     try {

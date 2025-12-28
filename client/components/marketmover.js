@@ -1,34 +1,11 @@
-import { useState, useEffect } from "react";
 import { useMarket } from "@/context/marketmoverContext";
 import { FaArrowTrendUp } from "react-icons/fa6";
-
 import Image from "next/image";
 function MarketMover() {
-  const { getMarketMover } = useMarket();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [movers, setMovers] = useState([]);
+  const { movers } = useMarket;
+  const topMover = movers?.slice(0, 4) || [];
 
-  const marketMover = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const data = await getMarketMover();
-      setMovers(data.slice(0, 4));
-    } catch (err) {
-      setError("Can't fetch market now");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    marketMover();
-  }, [getMarketMover]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="bg-surface mt-[30px] w-[98%] mx-auto p-[10px] rounded rounded-2 border border-1 border-border">
@@ -42,9 +19,8 @@ function MarketMover() {
           </span>
         </h4>
 
-        {error && <p className="text-error p-1 text-xs">{error}</p>}
         <div className="grid md:grid-cols-2 gap-3">
-          {movers.map((m, i) => (
+          {topMover.map((m, i) => (
             <div
               key={i}
               className="bg-background rounded-2xl p-4 transition-transform cursor-pointer hover:scale-[1.03] flex flex-col gap-3"

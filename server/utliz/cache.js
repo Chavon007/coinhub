@@ -18,3 +18,21 @@ export const getCache = (key) => {
 
   return cached.data;
 };
+
+export const clearCache = () => {
+  Object.keys(cacheStore).forEach((key) => delete cacheStore[key]);
+};
+
+export const getCacheStats = () => {
+  const stats = {};
+  Object.keys(cacheStore).forEach((key) => {
+    const remaining = cacheStore[key].expiry - Date.now();
+
+    stats[key] = {
+      expiresIn: `${Math.floor(remaining / 1000)}s`,
+      hasData: !!cacheStore[key].data,
+    };
+  });
+
+  return stats;
+};

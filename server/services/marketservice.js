@@ -1,29 +1,32 @@
 import axios from "axios";
-// import { getCache, setCache} from "../utliz/cache.js";
+import { getCache, setCache} from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
+import { coinGeckoLimiter } from "../utliz/rateLimiter.js";
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 
 export const fetchMarketMovers = async () => {
-  // const cacheKey = "marketMovers";
-  // const cached = getCache(cacheKey);
-  // if (cached) {
-   
-  //   return cached;
-  // }
+  const cacheKey = "marketMovers";
+  const cached = getCache(cacheKey);
+  if (cached) {
+
+    return cached;
+  }
 
   try {
-    const { data } = await axios.get(`${COINGECKO_API_URL}/coins/markets`, {
-      params: {
-        vs_currency: "usd",
-        order: "market_cap_desc",
-        per_page: 10,
-        page: 1,
-        price_change_percentage: "24h",
-        // sparkline: true,
-      },
-      timeout: 30000,
-    });
+    const { data } = await coinGeckoLimiter.execute(() =>
+      axios.get(`${COINGECKO_API_URL}/coins/markets`, {
+        params: {
+          vs_currency: "usd",
+          order: "market_cap_desc",
+          per_page: 10,
+          page: 1,
+          price_change_percentage: "24h",
+          // sparkline: true,
+        },
+        timeout: 30000,
+      })
+    );
 
     const result = data.map((coin) => ({
       id: coin.id,
@@ -34,8 +37,8 @@ export const fetchMarketMovers = async () => {
       change24h: coin.price_change_percentage_24h,
       marketCap: coin.market_cap,
     }));
-    // setCache(cacheKey, result, 60 * 1000);
-    // console.log("Market movers cache updated");
+    setCache(cacheKey, result, 3 * 60 * 1000);
+    console.log("Market movers cache updated");
     return result;
   } catch (err) {
     console.error(err.message);
@@ -46,6 +49,8 @@ export const fetchMarketMovers = async () => {
 //Get  holdings rate
 
 export const getPortfolioChangeService = async (walletId) => {
+
+  
   const balances = await Balance.find({ walletId });
   if (!balances.length) throw new Error("No balances found");
 
@@ -82,7 +87,7 @@ export const getPortfolioChangeService = async (walletId) => {
       amount: b.amount,
       currentPrice,
       oldPrice,
-      change: change.toFixed(2), // percentage
+      change: change.toFixed(2), 
       value: (b.amount * currentPrice).toFixed(2),
     });
   }

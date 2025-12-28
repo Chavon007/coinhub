@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useState, createContext, useContext } from "react";
+import {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
 
 const MarketMoverContext = createContext();
 
 function MarketMoverProvider({ children }) {
   const [movers, setMover] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const getMarketMover = async () => {
+  const getMarketMover = useCallback(async () => {
+    if (loading) return movers;
+    setLoading(true);
     try {
       const getMover = await fetch(
         "http://localhost:4000/api/get-market-movers",
@@ -22,12 +31,14 @@ function MarketMoverProvider({ children }) {
     } catch (err) {
       console.error(err);
       throw err;
+    } finally {
+      setLoading(false);
     }
-  };
+  });
   useEffect(() => {
     getMarketMover();
 
-    const interval = setInterval(getMarketMover, 60000);
+    const interval = setInterval(getMarketMover, 3 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
   return (
