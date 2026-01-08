@@ -2,7 +2,7 @@ import { useMarket } from "@/context/marketmoverContext";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import Image from "next/image";
 function MarketMover() {
-  const { movers } = useMarket;
+  const { movers } = useMarket();
   const topMover = movers?.slice(0, 4) || [];
 
 

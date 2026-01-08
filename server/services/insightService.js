@@ -65,7 +65,7 @@ export const generateAIInsight = async (news, coin = null) => {
 
     const prompt = coin
       ? `Analyze the following crypto news about ${coin}.
-Return ONLY a valid JSON array with a short AI insight (1-2 sentences) for each headline.
+Return ONLY a valid JSON array with an AI insight (2-3 sentences) for each headline. Add an advice for people about the effect the news will have on the coin
 Do not include any markdown formatting, code blocks, or extra text.
 
 Format:
