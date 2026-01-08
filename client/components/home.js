@@ -10,14 +10,18 @@ function Mainhome() {
   const [menu, setMenu] = useState(false);
   return (
     <div className="container mx-auto bg-background w-full h-auto p-[10px] pb-[30px]">
-      <div className=" w-[95%] mx-auto h-auto mt-[10px]">
+      <div className=" w-[98%] mx-auto h-auto mt-[10px]">
         {/* header section */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-[10px]  ">
           {/* logo */}
-          <div className="w-[20%] p-[10px]">
-            <h1 className="font-orbitron text-3xl bold text-text-secondary">
-              CoinHub
-            </h1>
+          <div className="w-[30%]">
+            <Image 
+              src="/logo11.png"
+              alt="coinhub"
+              width={200}
+              height={0}
+              className="text-1xl bold text-text-secondary"
+            />
           </div>
 
           <div className="hidden lg:block w-[15%]  p-[5px] lg:flex lg:justify-between lg:gap-2 lg:items-center">
@@ -64,7 +68,7 @@ function Mainhome() {
 
         {/* body section */}
 
-        <div className=" mt-[20px] lg:mt-[40px] lg:flex justify-between items-center">
+        <div className=" mt-[20px] lg:mt-[0] lg:flex justify-between items-center">
           {/* body text */}
           <div className="w-[100%] lg:w-[70%] flex flex-col">
             <h2 className="w-[100%] text-center lg:max-w-[500px] lg:text-left font-outfit text-text-secondary text-2xl lg:text-5xl font-bold">

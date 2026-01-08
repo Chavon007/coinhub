@@ -3,6 +3,7 @@ import { CiMenuBurger, CiSettings } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 function Header() {
   const [menu, setMenu] = useState(false);
@@ -11,30 +12,52 @@ function Header() {
     <header className="bg-background w-full">
       <div className="max-w-[1200px] mx-auto flex justify-between items-center p-4">
         {/* Logo */}
-        <div>
-          <h1 className="font-orbitron text-3xl font-bold text-text-secondary">
-            CoinHub
-          </h1>
+        <div className="w-[30%]">
+          <Image
+            src="/logo11.png"
+            alt="coinhub"
+            width={200}
+            height={0}
+            className="text-1xl bold text-text-secondary"
+          />
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex gap-6 items-center">
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href="/"
+          >
             Home
           </Link>
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href="/about"
+          >
             About
           </Link>
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href=""
+          >
             News
           </Link>
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="/login">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href="/login"
+          >
             AI Insight
           </Link>
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="/login">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href="/login"
+          >
             Contact
           </Link>
-          <Link className="text-text-secondary font-roboto font-bold hover:text-text-primary" href="/login">
+          <Link
+            className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+            href="/login"
+          >
             Wallet Hub
           </Link>
           <button className="flex items-center gap-1">
@@ -46,7 +69,10 @@ function Header() {
         </nav>
 
         {/* Mobile Menu Icon */}
-        <div className="lg:hidden text-3xl text-text-secondary" onClick={() => setMenu(!menu)}>
+        <div
+          className="lg:hidden text-3xl text-text-secondary"
+          onClick={() => setMenu(!menu)}
+        >
           {menu ? <IoCloseOutline /> : <CiMenuBurger />}
         </div>
       </div>
@@ -54,17 +80,28 @@ function Header() {
       {/* Mobile Menu */}
       {menu && (
         <nav className="lg:hidden bg-background w-full fixed top-[64px] left-0 flex flex-col gap-4 p-4 max-w-[400px]">
-          {["Home", "About", "News", "AI Insight", "Contact", "Wallet Hub"].map((item, i) => (
-            <Link
-              key={i}
-              href={item === "AI Insight" || item === "Contact" || item === "Wallet Hub" ? "/login" : ""}
-              className="text-text-secondary font-roboto font-bold hover:text-text-primary"
-              onClick={() => setMenu(false)}
-            >
-              {item}
-            </Link>
-          ))}
-          <button className="flex items-center gap-1" onClick={() => setMenu(false)}>
+          {["Home", "About", "News", "AI Insight", "Contact", "Wallet Hub"].map(
+            (item, i) => (
+              <Link
+                key={i}
+                href={
+                  item === "AI Insight" ||
+                  item === "Contact" ||
+                  item === "Wallet Hub"
+                    ? "/login"
+                    : ""
+                }
+                className="text-text-secondary font-roboto font-bold hover:text-text-primary"
+                onClick={() => setMenu(false)}
+              >
+                {item}
+              </Link>
+            )
+          )}
+          <button
+            className="flex items-center gap-1"
+            onClick={() => setMenu(false)}
+          >
             <CiSettings className="text-text-primary text-2xl" />
             <span className="text-text-secondary font-roboto font-bold hover:text-text-primary">
               Settings
