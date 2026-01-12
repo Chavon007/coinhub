@@ -15,7 +15,7 @@ export const createTransactions = async (req, res) => {
     }
 
     //get current balance in a wallet
-    const balance = await walletbalance.findOne(walletId, coin);
+    const balance = await walletbalance.findOne({walletId, coin});
     const currentAmount = balance ? balance.amount : 0;
 
     // check if user have enough balance to sell
@@ -29,7 +29,7 @@ export const createTransactions = async (req, res) => {
 
     // check current price on coin in the market
 
-    const { data: priceData } = axios.get(
+    const { data: priceData } = await axios.get(
       `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`
     );
 
@@ -52,9 +52,9 @@ export const createTransactions = async (req, res) => {
     if (type === "BUY") newAmount += amount;
     if (type === "SELL") newAmount -= amount;
 
-    if (walletbalance) {
-      walletbalance.amount = newAmount;
-      await walletbalance.save();
+    if (balance) {
+      balance.amount = newAmount;
+      await balance.save();
     } else {
       await walletbalance.create({ walletId, coin, amount: newAmount });
     }
