@@ -49,24 +49,41 @@ const technology = [
 ];
 function About() {
   return (
-    <div>
+    <div className="max-w-[1200px] mx-auto p-[5px]">
       {/* header */}
-      <div>
-        <h2>TRADE</h2>
-        <h2>THE FUTURE</h2>
-        <p>
+      <div className="text-center gap-4 flex flex-col h-[50vh] item-center justify-center mt-[10px] p-4">
+        <h2 className="font-outfit font-bold text-text-primary text-5xl">
+          TRADE
+        </h2>
+        <h2 className="font-outfit font-semibold text-text-secondary text-3xl">
+          THE FUTURE
+        </h2>
+        <p className="text-text-primary font-nunito-sans text-sm font-medium italic max-w-[600px] mx-auto">
           We're not just building a platform. We're engineering the
           infrastructure for the next financial revolution.
         </p>
-        <Link href="/">Start Trading</Link>
+        <Link
+          className="bg-accent-green w-[150px] mx-auto rounded rounded-1xl p-[8px] text-[#E5E7EB] font-outfit text-sm  hover:bg-green-700 hover:scale-[1.05] cursor-pointer"
+          href="/"
+        >
+          Start Trading
+        </Link>
       </div>
 
       {/* usage */}
-      <div>
+      <div className="grid grid-cols-2 gap-4 w-[98%] mx-auto">
         {usage.map((u, index) => (
-          <div key={index}>
-            <h4>{u.data}</h4>
-            <p>{u.text}</p>
+          <div
+            className="bg-surface rounded-2xl  p-4 transition cursor-pointer hover:scale-[1.03]
+                 flex flex-col items-center justify-center h-[150px]"
+            key={index}
+          >
+            <h4 className="text-3xl font-roboto text-center font-bold text-text-secondary">
+              {u.data}
+            </h4>
+            <p className="text-base mt-[5px] text-center italic font-outfit text-text-primary ">
+              {u.text}
+            </p>
           </div>
         ))}
       </div>

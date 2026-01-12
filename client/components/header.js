@@ -10,7 +10,7 @@ function Header() {
 
   return (
     <header className="bg-background w-full">
-      <div className="max-w-[1200px] mx-auto flex justify-between items-center px-4 py-2">
+      <div className="max-w-[1200px] mx-auto flex justify-between items-center p-4">
         {/* Logo */}
         <div className="w-[20%]">
           <Image
