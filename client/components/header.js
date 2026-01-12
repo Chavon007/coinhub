@@ -10,13 +10,13 @@ function Header() {
 
   return (
     <header className="bg-background w-full">
-      <div className="max-w-[1200px] mx-auto flex justify-between items-center p-4">
+      <div className="max-w-[1200px] mx-auto flex justify-between items-center px-4 py-2">
         {/* Logo */}
-        <div className="w-[30%]">
+        <div className="w-[20%]">
           <Image
-            src="/logo11.png"
+            src="/mainlogo.svg"
             alt="coinhub"
-            width={200}
+            width={150}
             height={0}
             className="text-1xl bold text-text-secondary"
           />

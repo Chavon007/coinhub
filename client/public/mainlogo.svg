@@ -1,0 +1,47 @@
+<svg id="logo" width="600" height="180" viewBox="0 0 620 190" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Gradient for modern look -->
+                    <linearGradient id="coinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:1"></stop>
+                    </linearGradient>
+                    
+                    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1"></stop>
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1"></stop>
+                    </linearGradient>
+                    
+                    <!-- Glow effect -->
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"></feGaussianBlur>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"></feMergeNode>
+                            <feMergeNode in="SourceGraphic"></feMergeNode>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Modern circular coin design -->
+                <circle cx="95" cy="95" r="75" fill="url(#coinGradient)" opacity="0.1"></circle>
+                <circle cx="95" cy="95" r="65" fill="url(#coinGradient)" opacity="0.2"></circle>
+                <circle cx="95" cy="95" r="55" fill="url(#coinGradient)" filter="url(#glow)"></circle>
+                
+                <!-- Inner circle with 3D effect -->
+                <circle cx="95" cy="92" r="48" fill="#0ea5e9" opacity="0.3"></circle>
+                <circle cx="95" cy="95" r="48" fill="#06b6d4" stroke="#0ea5e9" stroke-width="3"></circle>
+                
+                <!-- Stylized C symbol -->
+                <path d="M 95 60 A 35 35 0 1 0 95 130" stroke="#ffffff" stroke-width="8" fill="none" stroke-linecap="round"></path>
+                <circle cx="95" cy="95" r="12" fill="#ffffff"></circle>
+                
+                <!-- Accent elements - dots around coin -->
+                <circle cx="50" cy="50" r="4" fill="#0ea5e9" opacity="0.6"></circle>
+                <circle cx="140" cy="50" r="4" fill="#0ea5e9" opacity="0.6"></circle>
+                <circle cx="140" cy="140" r="4" fill="#0ea5e9" opacity="0.6"></circle>
+                
+                <!-- CoinHub Text with modern font style -->
+                <text x="200" y="110" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="url(#textGradient)" letter-spacing="-2">CoinHub</text>
+                
+                <!-- Tagline with updated position -->
+                <text x="202" y="145" font-family="Arial, sans-serif" font-size="22" fill="#64748b" letter-spacing="3">TRADE THE FUTURE</text>
+            </svg>

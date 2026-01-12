@@ -14,11 +14,11 @@ function Mainhome() {
         {/* header section */}
         <div className="flex justify-between items-center px-[10px]  ">
           {/* logo */}
-          <div className="w-[30%]">
-            <Image 
-              src="/logo11.png"
+          <div className="w-[20%]">
+            <Image
+              src="/mainlogo.svg"
               alt="coinhub"
-              width={200}
+              width={150}
               height={0}
               className="text-1xl bold text-text-secondary"
             />
