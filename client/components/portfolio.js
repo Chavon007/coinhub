@@ -1,13 +1,17 @@
 "use client";
 
+import Holdings from "./holdings";
 import { FaDownload } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { usePortfolio } from "@/context/portfolioContext";
 import { FaWallet } from "react-icons/fa";
+import { useState } from "react";
+import History from "./history";
+
 function MainPort() {
   const { loading, error, portfolio } = usePortfolio();
-
+  const [activeTab, setActiveTab] = useState("overview");
   if (loading) return <p>loading....</p>;
   if (error) return <p>Error: {error}</p>;
   if (!loading) return <p>No portfolio data</p>;
@@ -37,6 +41,7 @@ function MainPort() {
       amount: portfolio?.pnlPercentage || 0,
     },
   ];
+
   return (
     <div>
       {/* header */}
@@ -67,6 +72,34 @@ function MainPort() {
             <p>{t.amount}</p>
           </div>
         ))}
+      </div>
+
+      {/* holdings and history tab */}
+
+      <div>
+        {/* holdings and history tab button */}
+
+        <div>
+          <button
+            className={` ${activeTab === "overview"}`}
+            onClick={() => setActiveTab("overview")}
+          >
+            Overview
+          </button>
+
+          <button
+            className={` ${activeTab === "history"}`}
+            onClick={() => setActiveTab("history")}
+          >
+            Historical P&L
+          </button>
+        </div>
+
+        {/* holdings and history tab details */}
+        <div>
+          {activeTab === "overview" && <Holdings />}
+          {activeTab === "history" && <History />}
+        </div>
       </div>
     </div>
   );
