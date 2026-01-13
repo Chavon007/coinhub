@@ -128,7 +128,7 @@ function MainPort() {
         </div>
 
         {/* holdings and history tab details */}
-        <div className="w-[95%] mx-auto">
+        <div className="">
           {activeTab === "overview" && <Holdings />}
           {/* {activeTab === "history" && <History />} */}
         </div>

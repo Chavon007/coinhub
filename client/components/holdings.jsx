@@ -2,7 +2,38 @@ import { usePortfolio } from "@/context/portfolioContext";
 import { FaWallet } from "react-icons/fa";
 function Holdings() {
   const { loading, portfolio } = usePortfolio();
-  const theHolding = portfolio?.holdings?.map((h) => ({
+
+  const seedHoldings = [
+    {
+      asset: "Bitcoin",
+      amount: 0.45,
+      price: 42500,
+      value: 19125,
+      invested: 16000,
+      pnl: 3125,
+      pnlPercentage: 19.5,
+    },
+    {
+      asset: "Ethereum",
+      amount: 3.2,
+      price: 2300,
+      value: 7360,
+      invested: 8000,
+      pnl: -640,
+      pnlPercentage: -8,
+    },
+    {
+      asset: "Solana",
+      amount: 120,
+      price: 98,
+      value: 11760,
+      invested: 9000,
+      pnl: 2760,
+      pnlPercentage: 30.6,
+    },
+  ];
+
+  const realHolding = portfolio?.holdings?.map((h) => ({
     asset: h.coin,
     amount: h.amount,
     price: h.currentPrice,
@@ -12,6 +43,8 @@ function Holdings() {
     pnlPercentage: parseFloat(h.pnlPercentage),
   }));
 
+  const theHolding =
+    realHolding && realHolding > 0 ? realHolding : seedHoldings;
   if (loading) return <p>loading.....</p>;
 
   if (!theHolding || theHolding.length === 0)
@@ -24,36 +57,53 @@ function Holdings() {
       </p>
     );
   return (
-    <div>
-      <div>
-        <h4>Holding</h4>
+    <div className="w-[98%] flex justify-between items-center h-auto">
+      <div className="bg-surface w-[75%]   p-[10px]">
+        <h4 className="text-text-primary ml-[20px] font-nunito-sans text-1xl font-semibold">
+          Holdings
+        </h4>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Amount</th>
-              <th>Price</th>
-              <th>Value</th>
-              <th>Invested</th>
-              <th>P&L</th>
-              <th>P&L percentage</th>
+        <table className="p-2 w-full border-collapse">
+          <thead className=" bg-surface border-b border-gray-200 ">
+            <tr className="text-left text-sm text-text-secondary">
+              <th className="py-3 px-4 font-semibold">Asset</th>
+              <th className="py-3 px-4 font-semibold">Amount</th>
+              <th className="py-3 px-4 font-semibold">Price</th>
+              <th className="py-3 px-4 font-semibold">Value</th>
+              <th className="py-3 px-4 font-semibold">Invested</th>
+              <th className="py-3 px-4 font-semibold">P&amp;L</th>
+              <th className="py-3 px-4 font-semibold">P&amp;L %</th>
             </tr>
           </thead>
 
           <tbody>
             {theHolding.map((h, index) => (
-              <tr key={index}>
-                <td>{h.asset}</td>
-                <td>{h.amount}</td>
-                <td>{h.currentPrice}</td>
-                <td>{h.totalValue}</td>
-                <td>{h.invested}</td>
-                <td>{h.pnl >= 0 ? "text-accent-green" : "text-accent-red"}</td>
-                <td>
-                  {h.pnlPercentage >= 0
-                    ? "text-accent-green"
-                    : "text-accent-red"}
+              <tr
+                className="border-b border-gray-100 hover:bg-gray-50 transition "
+                key={index}
+              >
+                <td className="p-6 font-medium">{h.asset}</td>
+                <td className="p-6">{h.amount}</td>
+                <td className="p-6 ">{h.price}</td>
+                <td className="p-6">{h.value}</td>
+                <td className="p-6">{h.invested}</td>
+
+                <td
+                  className={`py-3 px-4 font-semibold ${
+                    h.pnl >= 0 ? "text-accent-green" : "text-accent-red"
+                  }`}
+                >
+                  {h.pnl}
+                </td>
+
+                <td
+                  className={`py-3 px-4 font-semibold ${
+                    h.pnlPercentage >= 0
+                      ? "text-accent-green"
+                      : "text-accent-red"
+                  }`}
+                >
+                  {h.pnlPercentage}%
                 </td>
               </tr>
             ))}
