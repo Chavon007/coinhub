@@ -7,14 +7,14 @@ import { FaArrowTrendDown } from "react-icons/fa6";
 import { usePortfolio } from "@/context/portfolioContext";
 import { FaWallet } from "react-icons/fa";
 import { useState } from "react";
-import History from "./history";
+// import History from "./history";
 
 function MainPort() {
   const { loading, error, portfolio } = usePortfolio();
   const [activeTab, setActiveTab] = useState("overview");
   if (loading) return <p>loading....</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!loading) return <p>No portfolio data</p>;
+  if (!portfolio) return <p>No portfolio data</p>;
 
   const totalDetails = [
     {
@@ -43,19 +43,25 @@ function MainPort() {
   ];
 
   return (
-    <div>
+    <div className="max-w-[1200px] mx-auto flex flex-col gap-3">
       {/* header */}
-      <div>
-        <div>
-          <h3>My Portfolio</h3>
-          <p>Track your crypto investments and performance</p>
+      <div className=" w-[98%] mx-auto flex justify-between items-center">
+        <div className="p-2 w-[50%]">
+          <h3 className="text-3xl font-orbitron text-text-primary font-bold">
+            My Portfolio
+          </h3>
+          <p className="text-text-secondary font-nunito-sans font-semibold text-sm py-1">
+            Track your crypto investments and performance
+          </p>
         </div>
-        <div>
-          <button>
-            <span>
+        <div className="w-[200px] p-2">
+          <button className="flex bg-accent-green w-[130px] rounded-2xl p-2 justify-around items-center hover:bg-green-500 cursor-pointer">
+            <span className="text-text-primary">
               <FaDownload />
             </span>
-            <span>Export CSV</span>
+            <span className=" text-text-primary text-sm font-bold  font-nunito-sans">
+              Export CSV
+            </span>
           </button>
         </div>
       </div>
@@ -98,7 +104,7 @@ function MainPort() {
         {/* holdings and history tab details */}
         <div>
           {activeTab === "overview" && <Holdings />}
-          {activeTab === "history" && <History />}
+          {/* {activeTab === "history" && <History />} */}
         </div>
       </div>
     </div>

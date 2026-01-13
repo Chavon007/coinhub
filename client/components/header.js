@@ -56,7 +56,7 @@ function Header() {
           </Link>
           <Link
             className="text-text-secondary font-roboto font-bold hover:text-text-primary"
-            href="/choosewallet"
+            href="/wallethub"
           >
             Wallet Hub
           </Link>

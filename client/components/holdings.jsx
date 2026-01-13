@@ -18,37 +18,57 @@ function Holdings() {
     return <p>You currently do not have any holdings.</p>;
   return (
     <div>
-      <h3>Holding</h3>
+      <div>
+        <h4>Holding</h4>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Asset</th>
-            <th>Amount</th>
-            <th>Price</th>
-            <th>Value</th>
-            <th>Invested</th>
-            <th>P&L</th>
-            <th>P&L percentage</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {theHolding.map((h, index) => (
-            <tr key={index}>
-              <td>{h.asset}</td>
-              <td>{h.amount}</td>
-              <td>{h.currentPrice}</td>
-              <td>{h.totalValue}</td>
-              <td>{h.invested}</td>
-              <td>{h.pnl >= 0 ? "text-accent-green" : "text-accent-red"}</td>
-              <td>
-                {h.pnlPercentage >= 0 ? "text-accent-green" : "text-accent-red"}
-              </td>
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Amount</th>
+              <th>Price</th>
+              <th>Value</th>
+              <th>Invested</th>
+              <th>P&L</th>
+              <th>P&L percentage</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {theHolding.map((h, index) => (
+              <tr key={index}>
+                <td>{h.asset}</td>
+                <td>{h.amount}</td>
+                <td>{h.currentPrice}</td>
+                <td>{h.totalValue}</td>
+                <td>{h.invested}</td>
+                <td>{h.pnl >= 0 ? "text-accent-green" : "text-accent-red"}</td>
+                <td>
+                  {h.pnlPercentage >= 0
+                    ? "text-accent-green"
+                    : "text-accent-red"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <h2>Token Allocation</h2>
+
+        {theHolding.map((t, index) => (
+          <div key={index}>
+            <p>
+              <span>{t.asset}</span> <span>{t.pnlPercentage}</span>
+            </p>
+            <p
+              className="text-accent-green h-2 rounded-full transition-all"
+              style={{ width: `${t.pnlPercentage}` }}
+            ></p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
