@@ -1,5 +1,5 @@
 import { usePortfolio } from "@/context/portfolioContext";
-
+import { FaWallet } from "react-icons/fa";
 function Holdings() {
   const { loading, portfolio } = usePortfolio();
   const theHolding = portfolio?.holdings?.map((h) => ({
@@ -15,7 +15,14 @@ function Holdings() {
   if (loading) return <p>loading.....</p>;
 
   if (!theHolding || theHolding.length === 0)
-    return <p>You currently do not have any holdings.</p>;
+    return (
+      <p className=" flex flex-col gap-2 justify-center items-center text-text-primary h-[40vh] font-outfit italic text-1xl">
+        <span className="text-5xl animate-bounce [animation-duration:0.8s]">
+          <FaWallet />
+        </span>
+        <span>You currently do not have any holdings.</span>
+      </p>
+    );
   return (
     <div>
       <div>

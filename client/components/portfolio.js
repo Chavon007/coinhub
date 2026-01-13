@@ -7,6 +7,8 @@ import { FaArrowTrendDown } from "react-icons/fa6";
 import { usePortfolio } from "@/context/portfolioContext";
 import { FaWallet } from "react-icons/fa";
 import { useState } from "react";
+import { FaMoneyBill1Wave } from "react-icons/fa6";
+import { MdOutlinePercent } from "react-icons/md";
 // import History from "./history";
 
 function MainPort() {
@@ -16,15 +18,23 @@ function MainPort() {
   if (error) return <p>Error: {error}</p>;
   if (!portfolio) return <p>No portfolio data</p>;
 
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat("en-us", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount);
+  };
+
   const totalDetails = [
     {
-      icon: <FaWallet className="text-accentgreen" />,
+      icon: <FaWallet className="text-accent-green" />,
       title: "Total Value",
-      amount: portfolio?.totalValue || 0,
+      amount: formatAmount(portfolio?.totalValue || 0),
     },
     {
+      icon: <FaMoneyBill1Wave className="text-accent-green" />,
       title: "Total Invested",
-      amount: portfolio?.totalInvested || 0,
+      amount: formatAmount(portfolio?.totalInvested || 0),
     },
     {
       icon:
@@ -34,10 +44,11 @@ function MainPort() {
           <FaArrowTrendDown className="text-accent-red" />
         ),
       title: "Total P&L",
-      amount: portfolio?.totalPnL || 0,
+      amount: formatAmount(portfolio?.totalPnL || 0),
     },
     {
-      title: "P&L Percentage",
+      icon: <MdOutlinePercent className="text-accent-green" />,
+      title: "P&L Percentage %",
       amount: portfolio?.pnlPercentage || 0,
     },
   ];
@@ -45,8 +56,8 @@ function MainPort() {
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-3">
       {/* header */}
-      <div className=" w-[98%] mx-auto flex justify-between items-center">
-        <div className="p-2 w-[50%]">
+      <div className=" w-[95%] mx-auto flex justify-between items-center">
+        <div className="py-2 w-[50%]">
           <h3 className="text-3xl font-orbitron text-text-primary font-bold">
             My Portfolio
           </h3>
@@ -54,7 +65,7 @@ function MainPort() {
             Track your crypto investments and performance
           </p>
         </div>
-        <div className="w-[200px] p-2">
+        <div className=" py-2">
           <button className="flex bg-accent-green w-[130px] rounded-2xl p-2 justify-around items-center hover:bg-green-500 cursor-pointer">
             <span className="text-text-primary">
               <FaDownload />
@@ -68,33 +79,48 @@ function MainPort() {
 
       {/* total details */}
 
-      <div>
+      <div className="grid grid-cols-4 gap-3 w-[95%] mx-auto">
         {totalDetails.map((t, index) => (
-          <div key={index}>
-            <h4>
-              <span>{t.icon}</span>
-              <span>{t.title}</span>
+          <div
+            className="bg-surface border-1 border-border rounded-2xl  p-3 h-[100px] flex flex-col gap-2"
+            key={index}
+          >
+            <h4 className=" ml-[8px] flex items-center gap-2 ">
+              <span className="text-2xl ">{t.icon}</span>
+              <span className="text-text-secondary  font-outfit text-sm">
+                {t.title}
+              </span>
             </h4>
-            <p>{t.amount}</p>
+            <p className=" ml-[8px] text-text-primary font-semibold font-roboto text-2xl">
+              {t.amount}
+            </p>
           </div>
         ))}
       </div>
 
       {/* holdings and history tab */}
 
-      <div>
+      <div className="flex flex-col gap-2 w-[95%] mx-auto">
         {/* holdings and history tab button */}
 
-        <div>
+        <div className=" p-2 flex gap-2">
           <button
-            className={` ${activeTab === "overview"}`}
+            className={`${
+              activeTab === "overview"
+                ? "bg-accent-green text-text-primary"
+                : "bg-surface text-text-secondary"
+            }  w-[130px] rounded-[8px] font-roboto font-bold p-2`}
             onClick={() => setActiveTab("overview")}
           >
             Overview
           </button>
 
           <button
-            className={` ${activeTab === "history"}`}
+            className={` ${
+              activeTab === "history"
+                ? "bg-accent-green text-text-primary"
+                : "bg-surface text-text-secondary"
+            } w-[180px] rounded-[10px] font-roboto font-bold p-2`}
             onClick={() => setActiveTab("history")}
           >
             Historical P&L
@@ -102,7 +128,7 @@ function MainPort() {
         </div>
 
         {/* holdings and history tab details */}
-        <div>
+        <div className="w-[95%] mx-auto">
           {activeTab === "overview" && <Holdings />}
           {/* {activeTab === "history" && <History />} */}
         </div>
