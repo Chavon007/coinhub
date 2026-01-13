@@ -1,5 +1,5 @@
-import transaction from "../model/transaction";
-import walletbalance from "../model/walletbalance";
+import Transaction from "../model/transaction";
+import Walletbalance from "../model/walletbalance";
 import axios from "axios";
 
 export const createTransactions = async (req, res) => {
@@ -10,12 +10,12 @@ export const createTransactions = async (req, res) => {
 
     if (!coin || !type || !amount || amount <= 0) {
       return res
-        .status(401)
+        .status(400)
         .json({ success: false, message: "Invalid transaction details" });
     }
 
     //get current balance in a wallet
-    const balance = await walletbalance.findOne({walletId, coin});
+    const balance = await Walletbalance.findOne({ walletId, coin });
     const currentAmount = balance ? balance.amount : 0;
 
     // check if user have enough balance to sell
@@ -30,14 +30,26 @@ export const createTransactions = async (req, res) => {
     // check current price on coin in the market
 
     const { data: priceData } = await axios.get(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`
+      "https://api.coingecko.com/api/v3/simple/price",
+      {
+        params: {
+          ids: coin,
+          vs_currencies: "usd",
+        },
+      }
     );
 
-    const priceAtTrade = priceData[coin]?.usd || 0;
+    if (!priceData[coin]) {
+      return res.status(400).json({
+        success: false,
+        message: "Unable to fetch coin price",
+      });
+    }
+    const priceAtTrade = data[coin].usd;
 
     // create transaction
 
-    const Transactions = await transaction.create({
+    const Transactions = await Transaction.create({
       walletId,
       coin,
       type,
@@ -56,7 +68,7 @@ export const createTransactions = async (req, res) => {
       balance.amount = newAmount;
       await balance.save();
     } else {
-      await walletbalance.create({ walletId, coin, amount: newAmount });
+      await Walletbalance.create({ walletId, coin, amount: newAmount });
     }
     res
       .status(201)
