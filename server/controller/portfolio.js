@@ -1,6 +1,5 @@
 import axios from "axios";
-import transaction from "../model/transaction";
-import walletbalance from "../model/walletbalance";
+import transaction from "../model/transaction.js";
 
 export const portfolio = async (req, res) => {
   try {
