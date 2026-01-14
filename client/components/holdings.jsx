@@ -1,10 +1,14 @@
+import Image from "next/image";
 import { usePortfolio } from "@/context/portfolioContext";
 import { FaWallet } from "react-icons/fa";
+import FormatAmount from "./formatamount";
 function Holdings() {
   const { loading, portfolio } = usePortfolio();
 
   const seedHoldings = [
     {
+      image: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+      abb: "BTC",
       asset: "Bitcoin",
       amount: 0.45,
       price: 42500,
@@ -14,6 +18,8 @@ function Holdings() {
       pnlPercentage: 19.5,
     },
     {
+      image: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+      abb: "ETH",
       asset: "Ethereum",
       amount: 3.2,
       price: 2300,
@@ -23,6 +29,8 @@ function Holdings() {
       pnlPercentage: -8,
     },
     {
+      image: "https://cryptologos.cc/logos/solana-sol-logo.png",
+      abb: "SOL",
       asset: "Solana",
       amount: 120,
       price: 98,
@@ -44,7 +52,7 @@ function Holdings() {
   }));
 
   const theHolding =
-    realHolding && realHolding > 0 ? realHolding : seedHoldings;
+    realHolding && realHolding.length > 0 ? realHolding : seedHoldings;
   if (loading) return <p>loading.....</p>;
 
   if (!theHolding || theHolding.length === 0)
@@ -63,10 +71,10 @@ function Holdings() {
           Holdings
         </h4>
 
-        <table className="p-2 w-full border-collapse">
+        <table className="p-2 w-full border-collapse rounded-[10px]">
           <thead className=" bg-surface border-b border-gray-200 ">
             <tr className="text-left text-sm text-text-secondary">
-              <th className="py-3 px-4 font-semibold">Asset</th>
+              <th className="py-3 px-4  font-outfit font-bold">Asset</th>
               <th className="py-3 px-4 font-semibold">Amount</th>
               <th className="py-3 px-4 font-semibold">Price</th>
               <th className="py-3 px-4 font-semibold">Value</th>
@@ -78,29 +86,46 @@ function Holdings() {
 
           <tbody>
             {theHolding.map((h, index) => (
-              <tr
-                className="border-b border-gray-100 hover:bg-gray-50 transition "
-                key={index}
-              >
-                <td className="p-6 font-medium">{h.asset}</td>
-                <td className="p-6">{h.amount}</td>
-                <td className="p-6 ">{h.price}</td>
-                <td className="p-6">{h.value}</td>
-                <td className="p-6">{h.invested}</td>
-
-                <td
-                  className={`py-3 px-4 font-semibold ${
-                    h.pnl >= 0 ? "text-accent-green" : "text-accent-red"
-                  }`}
-                >
-                  {h.pnl}
+              <tr className=" border-b-1  border-border  " key={index}>
+                <td className="p-6  flex items-center  gap-3 font-nunito-sans text-text-primary font-bold text-1xl">
+                  <span>
+                    <Image
+                      src={h.image}
+                      alt={h.asset}
+                      width={20}
+                      height={20}
+                      className="rounded-2xl"
+                    />
+                  </span>
+                  <span className="flex flex-col">
+                    <span>{h.abb}</span>
+                    <span className="text-xs text-text-secondary">{h.asset}</span>
+                  </span>
+                </td>
+                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                  {h.amount}
+                </td>
+                <td className="p-6  font-nunito-sans text-text-primary font-medium text-sm">
+                  {FormatAmount(h.price)}
+                </td>
+                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                  {FormatAmount(h.value)}
+                </td>
+                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                  {FormatAmount(h.invested)}
                 </td>
 
                 <td
                   className={`py-3 px-4 font-semibold ${
-                    h.pnlPercentage >= 0
-                      ? "text-accent-green"
-                      : "text-accent-red"
+                    h.pnl >= 0 ? "text-accent-green" : "text-red-500"
+                  }`}
+                >
+                  {FormatAmount(h.pnl)}
+                </td>
+
+                <td
+                  className={`py-3 px-4 font-semibold ${
+                    h.pnlPercentage >= 0 ? "text-accent-green" : "text-red-500"
                   }`}
                 >
                   {h.pnlPercentage}%
@@ -121,7 +146,7 @@ function Holdings() {
             </p>
             <p
               className="text-accent-green h-2 rounded-full transition-all"
-              style={{ width: `${t.pnlPercentage}` }}
+              style={{ width: `${t.pnlPercentage}%` }}
             ></p>
           </div>
         ))}

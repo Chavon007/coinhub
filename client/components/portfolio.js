@@ -1,5 +1,5 @@
 "use client";
-
+import FormatAmount from "./formatamount";
 import Holdings from "./holdings";
 import { FaDownload } from "react-icons/fa";
 import { FaArrowTrendUp } from "react-icons/fa6";
@@ -18,23 +18,23 @@ function MainPort() {
   if (error) return <p>Error: {error}</p>;
   if (!portfolio) return <p>No portfolio data</p>;
 
-  const formatAmount = (amount) => {
-    return new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-  };
+//   const formatAmount = (amount) => {
+//     return new Intl.NumberFormat("en-us", {
+//       style: "currency",
+//       currency: "USD",
+//     }).format(amount);
+//   };
 
   const totalDetails = [
     {
       icon: <FaWallet className="text-accent-green" />,
       title: "Total Value",
-      amount: formatAmount(portfolio?.totalValue || 0),
+      amount: FormatAmount(portfolio?.totalValue || 0),
     },
     {
       icon: <FaMoneyBill1Wave className="text-accent-green" />,
       title: "Total Invested",
-      amount: formatAmount(portfolio?.totalInvested || 0),
+      amount: FormatAmount(portfolio?.totalInvested || 0),
     },
     {
       icon:
@@ -44,7 +44,7 @@ function MainPort() {
           <FaArrowTrendDown className="text-accent-red" />
         ),
       title: "Total P&L",
-      amount: formatAmount(portfolio?.totalPnL || 0),
+      amount: FormatAmount(portfolio?.totalPnL || 0),
     },
     {
       icon: <MdOutlinePercent className="text-accent-green" />,

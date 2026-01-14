@@ -9,6 +9,7 @@ const nextConfig = {
         hostname: "coin-images.coingecko.com",
       },
     ],
+    domains: ["cryptologos.cc"],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
