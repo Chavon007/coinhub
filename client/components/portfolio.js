@@ -18,12 +18,7 @@ function MainPort() {
   if (error) return <p>Error: {error}</p>;
   if (!portfolio) return <p>No portfolio data</p>;
 
-//   const formatAmount = (amount) => {
-//     return new Intl.NumberFormat("en-us", {
-//       style: "currency",
-//       currency: "USD",
-//     }).format(amount);
-//   };
+
 
   const totalDetails = [
     {
@@ -56,12 +51,12 @@ function MainPort() {
   return (
     <div className="max-w-[1200px] mx-auto flex flex-col gap-3">
       {/* header */}
-      <div className=" w-[95%] mx-auto flex justify-between items-center">
-        <div className="py-2 w-[50%]">
-          <h3 className="text-3xl font-orbitron text-text-primary font-bold">
+      <div className=" w-[95%] mx-auto md:flex md:justify-between md:items-center">
+        <div className="py-2 md:w-[50%]">
+          <h3 className="text-2xl md:text-3xl font-orbitron text-text-primary font-bold">
             My Portfolio
           </h3>
-          <p className="text-text-secondary font-nunito-sans font-semibold text-sm py-1">
+          <p className="text-text-secondary font-nunito-sans font-semibold  text-xs md:text-sm py-1">
             Track your crypto investments and performance
           </p>
         </div>
@@ -79,10 +74,10 @@ function MainPort() {
 
       {/* total details */}
 
-      <div className="grid grid-cols-4 gap-3 w-[95%] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 w-[95%] md:w-[95%] mx-auto">
         {totalDetails.map((t, index) => (
           <div
-            className="bg-surface border-1 border-border rounded-2xl  p-3 h-[100px] flex flex-col gap-2"
+            className="bg-surface border-1 border-border  rounded-[10px] md:rounded-2xl  p-3 h-[110px] md:h-[100px] flex flex-col  gap-3 md:gap-2"
             key={index}
           >
             <h4 className=" ml-[8px] flex items-center gap-2 ">

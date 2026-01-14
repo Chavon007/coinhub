@@ -65,79 +65,89 @@ function Holdings() {
       </p>
     );
   return (
-    <div className="w-[98%] flex justify-between  gap-3 items-center h-auto">
-      <div className="bg-surface w-[70%]  rounded-2xl p-[10px]">
+    <div className="w-[98%] md:flex md:justify-between  gap-3 md:items-center h-auto">
+      <div className="bg-surface w-[99%] md:w-[70%] md:mx-[0]  mx-auto rounded-2xl p-[10px]">
         <h4 className="text-text-primary ml-[20px] font-nunito-sans text-1xl font-semibold">
           Holdings
         </h4>
 
-        <table className="p-2 w-full border-collapse">
-          <thead className=" bg-surface border-b border-gray-200 ">
-            <tr className="text-left text-sm text-text-secondary">
-              <th className="py-3 px-4  text-center font-outfit font-bold">
-                Asset
-              </th>
-              <th className="py-3 px-4 text-center font-semibold">Amount</th>
-              <th className="py-3 px-4 font-semibold text-center">Price</th>
-              <th className="py-3 px-4 font-semibold text-center">Value</th>
-              <th className="py-3 px-4 font-semibold text-center">Invested</th>
-              <th className="py-3 px-4 font-semibold text-center">P&amp;L</th>
-              <th className="py-3 px-4 text-center font-semibold">P&amp;L %</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {theHolding.map((h, index) => (
-              <tr className=" border-b-1  border-border  " key={index}>
-                <td className="p-6  flex items-center  gap-3 font-nunito-sans text-text-primary font-bold text-1xl">
-                  <span>
-                    <Image
-                      src={h.image}
-                      alt={h.asset}
-                      width={20}
-                      height={20}
-                      className="rounded-2xl"
-                    />
-                  </span>
-                  <span className="flex flex-col">
-                    <span>{h.abb}</span>
-                    <span className="text-xs text-text-secondary">
-                      {h.asset}
-                    </span>
-                  </span>
-                </td>
-                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
-                  {h.amount}
-                </td>
-                <td className="p-6  font-nunito-sans text-text-primary font-medium text-sm">
-                  {FormatAmount(h.price)}
-                </td>
-                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
-                  {FormatAmount(h.value)}
-                </td>
-                <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
-                  {FormatAmount(h.invested)}
-                </td>
-
-                <td
-                  className={`py-3 px-4 font-semibold ${
-                    h.pnl >= 0 ? "text-accent-green" : "text-red-500"
-                  }`}
-                >
-                  {FormatAmount(h.pnl)}
-                </td>
-
-                <td
-                  className={`py-3 px-4 font-semibold ${
-                    h.pnlPercentage >= 0 ? "text-accent-green" : "text-red-500"
-                  }`}
-                >
-                  {h.pnlPercentage}%
-                </td>
+        <div className="overflow-x-auto w-full">
+          <table className="p-2 md:w-full border-collapse">
+            <thead className=" bg-surface border-b border-gray-200 ">
+              <tr className="md:text-left  bg-red-100 text-sm text-text-secondary">
+                <th className="py-3 px-4  text-center font-outfit font-bold">
+                  Asset
+                </th>
+                <th className="py-3 px-4 text-center font-semibold">Amount</th>
+                <th className="hidden md:block py-3 px-4 font-semibold text-center">
+                  Price
+                </th>
+                <th className="py-3 px-4 font-semibold text-center">Value</th>
+                <th className="py-3 hidden md:block px-4 font-semibold text-center">
+                  Invested
+                </th>
+                <th className="py-3 px-4 font-semibold text-center">P&amp;L</th>
+                <th className=" hidden md:block py-3 px-4 text-center font-semibold">
+                  P&amp;L %
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {theHolding.map((h, index) => (
+                <tr className=" border-b-1  border-border  " key={index}>
+                  <td className="p-6  flex items-center  gap-3 font-nunito-sans text-text-primary font-bold text-1xl">
+                    <span>
+                      <Image
+                        src={h.image}
+                        alt={h.asset}
+                        width={20}
+                        height={20}
+                        className="rounded-2xl"
+                      />
+                    </span>
+                    <span className="flex flex-col">
+                      <span>{h.abb}</span>
+                      <span className="text-xs text-text-secondary">
+                        {h.asset}
+                      </span>
+                    </span>
+                  </td>
+                  <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                    {h.amount}
+                  </td>
+                  <td className="hidden md:block p-6  font-nunito-sans text-text-primary font-medium text-sm">
+                    {FormatAmount(h.price)}
+                  </td>
+                  <td className="p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                    {FormatAmount(h.value)}
+                  </td>
+                  <td className=" hidden md:block p-6 font-nunito-sans text-text-primary font-medium text-sm">
+                    {FormatAmount(h.invested)}
+                  </td>
+
+                  <td
+                    className={`py-3 px-4 font-semibold ${
+                      h.pnl >= 0 ? "text-accent-green" : "text-red-500"
+                    }`}
+                  >
+                    {FormatAmount(h.pnl)}
+                  </td>
+
+                  <td
+                    className={`hidden md:block py-3 px-4 font-semibold ${
+                      h.pnlPercentage >= 0
+                        ? "text-accent-green"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {h.pnlPercentage}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="bg-surface w-[40%] rounded-2xl h-[350px] p-[10px]">
