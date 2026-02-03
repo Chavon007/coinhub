@@ -1,0 +1,460 @@
+.body {
+  font-family: "Roboto", sans-serif !important;
+}
+
+.graduation-report-checker {
+  background-color: #E50914;
+  padding: 44px 99px;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker {
+    overflow: hidden;
+  }
+  .graduation-report-checker .diploma {
+    width: 322px;
+    height: 233px;
+    position: relative;
+  }
+  .graduation-report-checker .diploma .graduation-certificate {
+    scale: 0.45;
+    position: absolute;
+    left: -198px;
+    top: -150px;
+  }
+}
+@media (max-width: 415px) {
+  .graduation-report-checker {
+    padding: 44px 19px;
+    background-color: #FFFFFF;
+  }
+}
+.graduation-report-checker .logo-mobile {
+  margin-bottom: 37px;
+}
+.graduation-report-checker__header {
+  padding: 30px 44px;
+  width: 100%;
+  height: 300px;
+  background-color: #E50914;
+}
+.graduation-report-checker__header .gomycode-logo-variant {
+  width: 202.12px;
+  height: 23.5px;
+}
+.graduation-report-checker__header__upper-section {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.graduation-report-checker__header__upper-section__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+.graduation-report-checker__header__student-info__specialization {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  color: white;
+  opacity: 0.8;
+}
+.graduation-report-checker__header__student-info__title {
+  font-size: 48px;
+  font-weight: 600;
+  color: white;
+}
+.graduation-report-checker__header__student-info .full-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 10px !important;
+}
+.graduation-report-checker__header__student-info .description {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  opacity: 0.8;
+}
+.graduation-report-checker__content {
+  padding-left: 44px;
+  background-color: #E50914;
+  display: flex;
+  padding-bottom: 44px;
+}
+.graduation-report-checker__content__track-info-section {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  color: white;
+}
+.graduation-report-checker__content__track-info-section h3 {
+  color: white;
+}
+.graduation-report-checker__content__track-info-section__title {
+  font-size: 16px;
+  font-weight: 600;
+  padding-left: 20px;
+}
+.graduation-report-checker__content__track-info-section .learn-more-button {
+  width: 500px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  color: #E50914;
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker__content__track-info-section .learn-more-button {
+    width: 320px;
+    margin: auto;
+    background-color: #E50914;
+    color: white;
+  }
+}
+.graduation-report-checker__content__track-info-section__duration {
+  padding-left: 20px;
+  font-size: 14px;
+  font-weight: 400;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker__content__track-info-section__duration {
+    font-size: 12px;
+    color: #828A92;
+    padding-left: 0px;
+  }
+}
+.graduation-report-checker__content__track-info-section__description {
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 495px;
+  padding-left: 20px;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker__content__track-info-section__description {
+    font-size: 12px;
+    color: #828A92;
+    padding-left: 0px;
+  }
+}
+.graduation-report-checker__content__track-info-section__super-skills {
+  margin-top: auto;
+  background-color: #CC1D26;
+  max-height: 306px;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 20px;
+}
+.graduation-report-checker__content__track-info-section__super-skills__curriculum {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel .ant-carousel {
+  width: 350px;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel .navigation-arrow {
+  font-size: 20px;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel__skill-container {
+  display: flex;
+  font-size: 16px;
+  align-items: baseline;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel__skill-container__skill-icon {
+  color: white;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.graduation-report-checker__content__track-info-section__super-skills__carousel__skill-container__skill-name {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+.graduation-report-checker__footer {
+  padding: 49px 44px;
+  position: relative;
+}
+.graduation-report-checker__footer__content__text {
+  max-width: 560px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.graduation-report-checker__footer__content__text__red {
+  color: #E50914;
+}
+
+.graduation-report-checker__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+  color: #FFFFFF;
+  margin-bottom: 55px;
+}
+.graduation-report-checker__specialization {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  color: #FFFFFF;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker__specialization {
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+  }
+}
+.graduation-report-checker__track-title {
+  font-size: 48px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 36px;
+}
+@media (max-width: 415px) {
+  .graduation-report-checker__track-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+  }
+}
+
+.graduation-report-checker-footer {
+  position: relative;
+}
+.graduation-report-checker-footer__content {
+  padding: 49px 99px;
+}
+.graduation-report-checker-footer__content__text {
+  max-width: 560px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.graduation-report-checker-footer__content__text__red {
+  color: #E50914;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.basic-user-card {
+  display: flex;
+}
+.basic-user-card .content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 9px;
+  padding-top: 12px;
+}
+.basic-user-card .content .full-name {
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px !important;
+  color: white;
+}
+.basic-user-card .content .description {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 10px;
+  color: white;
+}
+@media (max-width: 415px) {
+  .basic-user-card {
+    margin-bottom: 26px;
+    margin-top: 16px;
+  }
+  .basic-user-card .content {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    margin-left: 9px;
+  }
+  .basic-user-card .content .full-name {
+    margin-bottom: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 19px !important;
+    color: black;
+  }
+  .basic-user-card .content .description {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 10px;
+  }
+}
+
+.graduation-certificate {
+  font-family: Montserrat !important;
+  border: 1px solid #e41219;
+  height: 519px;
+  width: 716px;
+  background-color: white;
+}
+.graduation-certificate__side-bar > div {
+  width: 84px;
+}
+.graduation-certificate__side-bar__one-fourth-circle {
+  height: 84px;
+  border-bottom-right-radius: 84px;
+  margin-bottom: 20px;
+}
+.graduation-certificate__side-bar__one-fourth-circle > div {
+  height: 42px;
+  width: 42px;
+  border-bottom-right-radius: 42px;
+}
+.graduation-certificate__side-bar__one-fourth-circle, .graduation-certificate__side-bar__one-fourth-circle > div {
+  border-right: 1px solid #e41219;
+  border-bottom: 1px solid #e41219;
+}
+.graduation-certificate__side-bar__one-half-circle {
+  height: 168px;
+  border-top-right-radius: 168px;
+  border-bottom-right-radius: 168px;
+  margin: 12px 0;
+}
+.graduation-certificate__side-bar__one-half-circle > div {
+  height: 84px;
+  width: 42px;
+  border-top-right-radius: 84px;
+  border-bottom-right-radius: 84px;
+  margin: 42px 0;
+}
+.graduation-certificate__side-bar__one-half-circle, .graduation-certificate__side-bar__one-half-circle > div {
+  border-top: 1px solid #e41219;
+  border-right: 1px solid #e41219;
+  border-bottom: 1px solid #e41219;
+}
+.graduation-certificate__side-bar__one-fourth-square {
+  height: 84px;
+  margin-top: 12px;
+}
+.graduation-certificate__side-bar__one-fourth-square > div {
+  height: 42px;
+  width: 42px;
+  margin-top: 42px;
+}
+.graduation-certificate__side-bar__one-fourth-square, .graduation-certificate__side-bar__one-fourth-square > div {
+  border-top: 1px solid #e41219;
+  border-right: 1px solid #e41219;
+}
+.graduation-certificate__content {
+  min-width: 80%;
+  padding: 51px 27px 36px 42px;
+}
+.graduation-certificate__content__header div {
+  font-size: 12px;
+  line-height: 1;
+  color: #767676;
+}
+.graduation-certificate__content__originalStamp {
+  position: absolute;
+  margin-top: 30px;
+  margin-left: 338px;
+}
+.graduation-certificate__content__body {
+  padding-top: 36px;
+  text-transform: uppercase;
+}
+.graduation-certificate__content__body__title {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #e41219;
+}
+.graduation-certificate__content__body__title__track-name {
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #1d1d1b;
+}
+.graduation-certificate__content__body__informations__presented-to {
+  padding: 36px 0 18px;
+}
+.graduation-certificate__content__body__informations__presented-to__prefix {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #1d1d1b;
+}
+.graduation-certificate__content__body__informations__presented-to__student {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #1d1d1b;
+}
+.graduation-certificate__content__body__informations__completion-of__prefix {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #0f0f0f;
+}
+.graduation-certificate__content__body__informations__completion-of__course {
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #e41219;
+}
+.graduation-certificate__content__footer {
+  margin-top: 24px;
+}
+.graduation-certificate__content__footer__informations__dates {
+  padding: 12px 0;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #1d1d1b;
+}
+.graduation-certificate__content__footer__informations__dates__from, .graduation-certificate__content__footer__informations__dates__to {
+  font-weight: 900;
+  padding: 0 6px;
+}
+.graduation-certificate__content__footer__informations__state-approval {
+  font-size: 7px;
+  line-height: 2;
+  color: #767676;
+}
+.graduation-certificate__content__footer__signatures {
+  display: flex;
+}
+.graduation-certificate__content__footer__signatures__logo {
+  width: 72px;
+  margin-right: 24px;
+}
+.graduation-certificate__content__footer__signatures__qrcode {
+  display: inline !important;
+}
+
+.avatar {
+  border-radius: 100%;
+  width: 87px;
+  height: 87px;
+}
+
+.x-flex-column-h-any-v-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.x-flex-h-between-v-any {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-inner {
+  width: 70% !important;
+  margin: auto !important;
+}
+
+/*# sourceMappingURL=main.css.map */

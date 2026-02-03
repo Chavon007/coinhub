@@ -74,7 +74,7 @@ function Holdings() {
         <div className="overflow-x-auto w-full">
           <table className="p-2 md:w-full border-collapse">
             <thead className=" bg-surface border-b border-gray-200 ">
-              <tr className="md:text-left  bg-red-100 text-sm text-text-secondary">
+              <tr className="md:text-left   text-sm text-text-secondary">
                 <th className="py-3 px-4  text-center font-outfit font-bold">
                   Asset
                 </th>
