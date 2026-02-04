@@ -13,7 +13,7 @@ function BalanceProvider({ children }) {
         "http://localhost:4000/api/total-balance",
         {
           credentials: "include",
-        }
+        },
       );
       const data = await totalBalance.json();
 
@@ -46,13 +46,38 @@ function BalanceProvider({ children }) {
     }
   };
 
+  const getEachBalance = async () => {
+    try {
+      const eachBalance = await fetch(
+        "http://localhost:4000/api/coin-balance",
+        {
+          credentials: "include",
+        },
+      );
+
+      const data = await eachBalance.json();
+      if (!eachBalance.ok) throw new Error(data.message);
+      setBalance(data.eachBalance ?? 0);
+      return data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
   useEffect(() => {
     totalBalance();
     portfolioChange();
+    getEachBalance();
   }, []);
   return (
     <BalanceContext.Provider
-      value={{ balance, portfolio, totalBalance, portfolioChange }}
+      value={{
+        balance,
+        portfolio,
+        totalBalance,
+        portfolioChange,
+        getEachBalance,
+      }}
     >
       {children}
     </BalanceContext.Provider>
