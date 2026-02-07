@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import { fetchCoinPrice, calculateExchageRate } from "../hook/coinupadte";
 import { LuRefreshCw } from "react-icons/lu";
 import { VscSettings } from "react-icons/vsc";
 import { useBalance } from "@/context/balanceContext";
@@ -40,7 +41,22 @@ function Swap() {
   const [toAmount, setToAmount] = useState("");
   const [coinBalance, setCoinBalnce] = useState([]);
   const [estimateRateModal, setEstimateRateModal] = useState(false);
+  const [coinPrices, setCoinPrices] = useState(null);
+  const [isLoadingPrices, setIsLoadingPrices] = useState(false);
+  const [exchangeRate, setExchangeRate] = useState(0);
 
+  const fetchPrice = async () => {
+    setIsLoadingPrices(true);
+    try {
+      const data = await fetchCoinPrice();
+      setCoinPrices(data);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    } finally {
+      setIsLoadingPrices(false);
+    }
+  };
   // fetch all balance
   const fetchBalances = async () => {
     try {
@@ -53,14 +69,33 @@ function Swap() {
 
   useEffect(() => {
     fetchBalances();
-  }, [getEachBalance]);
+    fetchPrice;
+  }, []);
+
+  // Fetches price of coin every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchPrice();
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // calculate exchange rate when coin change
 
   useEffect(() => {
-    if (!fromAmount) {
+    if (coinPrices) {
+      const rate = calculateExchageRate(coinPrices, fromCoin, toCoin);
+      setExchangeRate(rate);
+    }
+  }, [coinPrices, fromCoin, toCoin]);
+
+  // calculate toAmount when from Amount or rate changes
+  useEffect(() => {
+    if (!fromAmount || !exchangeRate) {
       setToAmount("");
       return;
     }
-    const rate = 0.98;
+    const rate = price();
 
     setToAmount((Number(fromAmount) * rate).toFixed(6));
   }, [fromAmount, fromCoin, toCoin]);
