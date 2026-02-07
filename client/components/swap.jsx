@@ -106,6 +106,14 @@ function Swap() {
     setToAmount((Number(fromAmount) * exchangeRate).toFixed(6));
   }, [fromAmount, fromCoin, toCoin]);
 
+  useEffect(() => {
+    if (fromAmount && toAmount && exchangeRate) {
+      setEstimateRateModal(true);
+    } else {
+      setEstimateRateModal(false);
+    }
+  }, [fromAmount, toAmount, exchangeRate]);
+
   // Validaton check
 
   const validateSwap = () => {
@@ -123,8 +131,10 @@ function Swap() {
     }
     if (!exchangeRate || exchangeRate === 0) {
       setError("Exchange rate not available. Please try again");
-      return;
+      return false;
     }
+
+    return true;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -140,9 +150,15 @@ function Swap() {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content -Type": "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(),
+        body: JSON.stringify({
+          fromCoin,
+          toCoin,
+          fromAmount,
+          toAmount,
+          exchangeRate,
+        }),
       });
       if (!res.ok) {
         setError("Failed to Swap coin");
@@ -173,7 +189,7 @@ function Swap() {
     <div>
       {/* SWAP FORM */}
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* header */}
           <div>
             <h3>Swap</h3>
@@ -271,31 +287,52 @@ function Swap() {
               <div>
                 <p>
                   <span>Rate</span>
-                  <span></span>
+                  <span>
+                    1 {availableCoin.find((c) => c.value === fromCoin)?.symbol}{" "}
+                    = {exchangeRate.toFixed(6)}{" "}
+                    {availableCoin.find((c) => c.value === toCoin)?.symbol}
+                  </span>
                 </p>
                 <p>
                   <span>Pricte Impact</span>
-                  <span></span>
+                  <span>{"<0.01%"}</span>
                 </p>
                 <p>
                   <span>Minimum received</span>
-                  <span></span>
+                  <span>
+                    {(Number(toAmount) * 0.995).toFixed(5)}{" "}
+                    {availableCoin.find((c) => c.value === toCoin)?.symbol}
+                  </span>
                 </p>
                 <p>
                   <span>Slippage tolerance</span>
-                  <span></span>
+                  <span>0.5%</span>
                 </p>
                 <p>
                   <span>Network fee</span>
-                  <span></span>
+                  <span>~$2.50</span>
                 </p>
               </div>
             </div>
           )}
 
           <div>
-            <p>{fromAmount ? "Swap" : "Enter Amount"}</p>
+            {error && <p>{error}</p>}
+            {success && <p>{success}</p>}
           </div>
+
+          <button
+            type="submit"
+            disabled={loading || !fromAmount || Number(fromAmount) <= 0}
+          >
+            <p>
+              {loading
+                ? "Swapping..."
+                : fromAmount && Number(fromAmount) > 0
+                  ? "Swap"
+                  : "Enter Amount"}
+            </p>
+          </button>
         </form>
       </div>
 
