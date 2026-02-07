@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Image from "next/image";
+
 import { LuRefreshCw } from "react-icons/lu";
 import { VscSettings } from "react-icons/vsc";
 import { useBalance } from "@/context/balanceContext";
 
-const avaliableCoin = [
+const availableCoin = [
   {
     value: "ethereum",
     label: "Ethereum",
@@ -41,10 +41,6 @@ function Swap() {
   const [coinBalance, setCoinBalnce] = useState([]);
   const [estimateRateModal, setEstimateRateModal] = useState(false);
 
-  useEffect(() => {
-    fetchBalances();
-  }, []);
-
   // fetch all balance
   const fetchBalances = async () => {
     try {
@@ -54,6 +50,20 @@ function Swap() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    fetchBalances();
+  }, [getEachBalance]);
+
+  useEffect(() => {
+    if (!fromAmount) {
+      setToAmount("");
+      return;
+    }
+    const rate = 0.98;
+
+    setToAmount((Number(fromAmount) * rate).toFixed(6));
+  }, [fromAmount, fromCoin, toCoin]);
 
   // filter the balance
   const getCoinBalance = (coinName) => {
@@ -101,12 +111,19 @@ function Swap() {
 
               <select
                 value={fromCoin}
-                onChange={(e) => setFromCoin(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setFromCoin(value);
+
+                  if (fromCoin === toCoin) {
+                    setToCoin(fromCoin === "ethereum" ? "bitcoin" : "ethereum");
+                    return;
+                  }
+                }}
               >
-                {avaliableCoin.map((c, index) => (
+                {availableCoin.map((c, index) => (
                   <option key={index} value={c.value}>
-                    <span>{c.image}</span>
-                    <span>{c.symbol}</span>
+                    {c.symbol}
                   </option>
                 ))}
               </select>
@@ -122,7 +139,7 @@ function Swap() {
 
               <p>
                 <span>Balance:</span>{" "}
-                <span>{getCoinBalance(fromCoin).toFixed(6)}</span>
+                <span>{getCoinBalance(toCoin).toFixed(6)}</span>
               </p>
             </div>
 
@@ -139,9 +156,9 @@ function Swap() {
                 value={toCoin}
                 onChange={(e) => setToCoin(e.target.value)}
               >
-                {avaliableCoin.map((a, index) => (
+                {availableCoin.map((a, index) => (
                   <option key={index} value={a.value}>
-                    <span>{a.image}</span> <span>{a.symbol}</span>
+                    {a.symbol}
                   </option>
                 ))}
               </select>
@@ -178,7 +195,7 @@ function Swap() {
           )}
 
           <div>
-            <p>{estimateRateModal ? "Enter Amount" : "Swap"}</p>
+            <p>{fromAmount ? "Swap" : "Enter Amount"}</p>
           </div>
         </form>
       </div>
