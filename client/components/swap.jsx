@@ -44,7 +44,9 @@ function Swap() {
   const [coinPrices, setCoinPrices] = useState(null);
   const [isLoadingPrices, setIsLoadingPrices] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(0);
-
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const fetchPrice = async () => {
     setIsLoadingPrices(true);
     try {
@@ -66,10 +68,15 @@ function Swap() {
       console.error(err);
     }
   };
+  // filter the balance
+  const getCoinBalance = (coinName) => {
+    const balance = coinBalance.find((b) => b.coin === coinName);
+    return balance ? balance.amount : 0;
+  };
 
   useEffect(() => {
     fetchBalances();
-    fetchPrice;
+    fetchPrice();
   }, []);
 
   // Fetches price of coin every 30 seconds
@@ -95,15 +102,72 @@ function Swap() {
       setToAmount("");
       return;
     }
-    const rate = price();
 
-    setToAmount((Number(fromAmount) * rate).toFixed(6));
+    setToAmount((Number(fromAmount) * exchangeRate).toFixed(6));
   }, [fromAmount, fromCoin, toCoin]);
 
-  // filter the balance
-  const getCoinBalance = (coinName) => {
-    const balance = coinBalance.find((b) => b.coin === coinName);
-    return balance ? balance.amount : 0;
+  // Validaton check
+
+  const validateSwap = () => {
+    setError("");
+
+    if (!fromAmount || Number(fromAmount) <= 0) {
+      setError("please enter a valid amoount");
+      return false;
+    }
+
+    const currentBalance = getCoinBalance(fromCoin);
+    if (fromAmount > currentBalance) {
+      setError(`Insufficient ${fromCoin.toUpperCase()} balance`);
+      return false;
+    }
+    if (!exchangeRate || exchangeRate === 0) {
+      setError("Exchange rate not available. Please try again");
+      return;
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateSwap()) {
+      return;
+    }
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    try {
+      const res = await fetch("url for swap", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content -Type": "application/json",
+        },
+        body: JSON.stringify(),
+      });
+      if (!res.ok) {
+        setError("Failed to Swap coin");
+        return;
+      }
+
+      const data = await res.json();
+      setSuccess("Swap successful");
+
+      await fetchBalances();
+
+      setFromAmount("");
+      setToAmount("");
+
+      console.log(data);
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 5000);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
