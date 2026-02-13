@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import swap from "../model/swap";
 import wallet from "../model/wallet";
 import walletbalance from "../model/walletbalance";
+import {
+  fetchExchangeRate,
+  calculateExchageRate,
+} from "../services/marketservice";
 
 export const swapCoin = async (req, res) => {
   // create a session
@@ -59,7 +63,8 @@ export const swapCoin = async (req, res) => {
 
     // Get real exchange rate
 
-    const exchangeRate = await getExchangeRate(fromCoin, toCoin);
+    const price = await fetchExchangeRate();
+    const exchangeRate = calculateExchageRate(price, fromCoin, toCoin);
     const toAmount = fromAmount * exchangeRate;
 
     // update balance
