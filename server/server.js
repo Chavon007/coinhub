@@ -5,6 +5,7 @@ import cors from "cors";
 import dbConfig from "./config/database.js";
 
 import marketMoverRoute from "./route/marketroute.js";
+import swapRoute from "./route/swap.js";
 import authRoutes from "./route/auth.js";
 import walletRoute from "./route/wallet.js";
 import aiInsightRoute from "./route/insightroute.js";
@@ -22,13 +23,14 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
 const PORT = 4000;
 
 app.use("/api", authRoutes);
+app.use("/api", swapRoute);
 app.use("/api", aiInsightRoute);
 app.use("/api", walletRoute);
 app.use("/api", marketMoverRoute);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCache, setCache} from "../utliz/cache.js";
+import { getCache, setCache } from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
 import { coinGeckoLimiter } from "../utliz/rateLimiter.js";
 
@@ -9,7 +9,6 @@ export const fetchMarketMovers = async () => {
   const cacheKey = "marketMovers";
   const cached = getCache(cacheKey);
   if (cached) {
-
     return cached;
   }
 
@@ -25,7 +24,7 @@ export const fetchMarketMovers = async () => {
           // sparkline: true,
         },
         timeout: 30000,
-      })
+      }),
     );
 
     const result = data.map((coin) => ({
@@ -49,14 +48,12 @@ export const fetchMarketMovers = async () => {
 //Get  holdings rate
 
 export const getPortfolioChangeService = async (walletId) => {
-
-  
   const balances = await Balance.find({ walletId });
   if (!balances.length) throw new Error("No balances found");
 
   const coinIds = balances.map((b) => b.coin).join(",");
   const todayPricesResp = await axios.get(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`
+    `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`,
   );
 
   const todayPrices = todayPricesResp.data;
@@ -76,7 +73,7 @@ export const getPortfolioChangeService = async (walletId) => {
     const currentPrice = todayPrices[b.coin]?.usd || 0;
 
     const historicalResp = await axios.get(
-      `https://api.coingecko.com/api/v3/coins/${b.coin}/history?date=${date24hAgo}`
+      `https://api.coingecko.com/api/v3/coins/${b.coin}/history?date=${date24hAgo}`,
     );
     const oldPrice = historicalResp.data.market_data?.current_price?.usd || 0;
 
@@ -87,11 +84,43 @@ export const getPortfolioChangeService = async (walletId) => {
       amount: b.amount,
       currentPrice,
       oldPrice,
-      change: change.toFixed(2), 
+      change: change.toFixed(2),
       value: (b.amount * currentPrice).toFixed(2),
     });
   }
   const totalValue = results.reduce((acc, c) => acc + parseFloat(c.value), 0);
 
   return { totalValue, coins: results };
+};
+
+//  fetch exchange rate
+export const fetchExchangeRate = async () => {
+  try {
+    const res = await axios.get(
+      " https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple&vs_currencies=usd",
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch prices: ${res.statusText}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+// exchange rate for each coin
+export const calculateExchageRate = (prices, fromCoin, toCoin) => {
+  if (!prices || !prices[fromCoin] || !prices[toCoin]) {
+    throw new Error(`Invalid prices for ${fromCoin} -> ${toCoin}`);
+  }
+  const fromPriceUSD = prices[fromCoin].usd;
+  const toPriceUSD = prices[toCoin].uds;
+  // how many tocoin you get for 1 fromcoin
+
+  const rate = fromPriceUSD / toPriceUSD;
+
+  return rate;
 };
