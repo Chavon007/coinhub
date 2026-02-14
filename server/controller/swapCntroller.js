@@ -37,7 +37,7 @@ export const swapCoin = async (req, res) => {
     }
 
     // Get user wallet
-    const userWallet = await wallet.find({ userId }).session(session);
+    const userWallet = await wallet.findOne({ userId }).session(session);
 
     if (!userWallet) {
       return res
@@ -46,7 +46,7 @@ export const swapCoin = async (req, res) => {
     }
 
     // check balance
-    const fromBalance = await walletbalance({
+    const fromBalance = await walletbalance.findOne({
       walletId: userWallet._id,
       coin: fromCoin,
     }).session(session);
@@ -93,7 +93,7 @@ export const swapCoin = async (req, res) => {
     const newSwap = await swap.create(
       [
         {
-          walletId: wallet._id,
+          walletId: userWallet._id,
           userId: userId,
           from_coin: fromCoin,
           to_coin: toCoin,

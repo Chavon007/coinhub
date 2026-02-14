@@ -95,20 +95,16 @@ export const getPortfolioChangeService = async (walletId) => {
 
 //  fetch exchange rate
 export const fetchExchangeRate = async () => {
-  try {
-    const res = await axios.get(
-      " https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple&vs_currencies=usd",
-    );
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch prices: ${res.statusText}`);
-    }
-    const data = await res.json();
-    return data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
+  const res = await axios.get(
+    " https://api.coingecko.com/api/v3/simple/price",
+    {
+      params: {
+        ids: "bitcoin,ethereum,solana,ripple",
+        vs_currencies: "usd",
+      },
+    },
+  );
+  return data;
 };
 
 // exchange rate for each coin
@@ -117,7 +113,7 @@ export const calculateExchageRate = (prices, fromCoin, toCoin) => {
     throw new Error(`Invalid prices for ${fromCoin} -> ${toCoin}`);
   }
   const fromPriceUSD = prices[fromCoin].usd;
-  const toPriceUSD = prices[toCoin].uds;
+  const toPriceUSD = prices[toCoin].usd;
   // how many tocoin you get for 1 fromcoin
 
   const rate = fromPriceUSD / toPriceUSD;
