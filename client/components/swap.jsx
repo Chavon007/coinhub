@@ -135,7 +135,7 @@ function Swap() {
 
     const balance = getCoinBalance(fromCoin);
     if (Number(fromAmount) > balance) {
-      alert("Insufficient balance");
+      setValidationError("Insufficient balance");
       return false;
     }
 
@@ -182,7 +182,7 @@ function Swap() {
 
   return (
     <form
-      className=" w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col  h-auto"
+      className="lg:w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col  h-auto"
       onSubmit={handleSubmit}
     >
       <div className="flex justify-between items-center">
@@ -214,22 +214,32 @@ function Swap() {
       {/* setting modal */}
 
       {showSettings && (
-        <div>
-          <p> Slippage Tolerance</p>
+        <div className="flex flex-col p-2 rounded-xl bg-background border-gray-100 gap-1">
+          <p className="text-text-primary font-roboto text-sm font-bold">
+            {" "}
+            Slippage Tolerance
+          </p>
 
-          <div>
-            {SLIPPAGE_PRESETS.map((val) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => handleSlippagePreset(val)}
-              >
-                {val}%
-              </button>
-            ))}
+          <div className="flex flex-col gap-2 ">
+            <div className="w-[150px] flex justify-between items-center">
+              {SLIPPAGE_PRESETS.map((val) => {
+                const isActive = slippage === val && customSlippage === "";
+                return (
+                  <button
+                    className={` text-text-secondary rounded-xl px-1 py-0.1 font-roboto text-base transition-all duration-200 ${isActive ? "bg-blue-500 text-white shadow-md" : "bg-surface text-text-secondary hover:bg-gray-700"}`}
+                    key={val}
+                    type="button"
+                    onClick={() => handleSlippagePreset(val)}
+                  >
+                    {val}%
+                  </button>
+                );
+              })}
+            </div>
 
-            <div>
+            <div className="border border-gray-300 rounded-2xl p-2 flex justify-between items-center w-[200px]">
               <input
+                className=" appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-button]:appearance-none  focus:outline-none placeholder:text-text-primary font-nunito-sans placeholder:font-light text-text-primary text-xs"
                 type="number"
                 min="0.01"
                 max="50"
@@ -238,10 +248,14 @@ function Swap() {
                 value={customSlippage}
                 onChange={handleCustomSlippage}
               />{" "}
-              <span>%</span>
+              <span className="text-text-primary text-xs font-roboto">%</span>
             </div>
           </div>
-          {slippage > 5 && <p>High slippage — your trade may be frontrun</p>}
+          {slippage > 5 && (
+            <p className="text-red-500 font-roboto text-sm">
+              High slippage — your trade may be frontrun
+            </p>
+          )}
         </div>
       )}
 
@@ -253,7 +267,7 @@ function Swap() {
 
         <div className="flex justify-between items-center">
           <input
-            className=" border-none text-2xl font-roboto text-text-primary placeholder:text-text-primary placeholder:border-none focus:outline-none"
+            className=" appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none border-none text-2xl font-roboto text-text-primary placeholder:text-text-primary placeholder:border-none focus:outline-none"
             type="number"
             min="0"
             step="any"
@@ -302,7 +316,7 @@ function Swap() {
         </p>
 
         <div className="flex justify-between items-center">
-          <div>
+          <div className="text-2xl font-roboto  text-text-primary">
             {previewLoading ? (
               <span>Fetching rate…</span>
             ) : (
@@ -337,22 +351,32 @@ function Swap() {
       </div>
 
       {preview && !previewLoading && (
-        <div>
+        <div className="mt-1 mx-3 flex flex-col gap-2">
           {rateDisplay && (
-            <div>
-              <span>Rate</span>
-              <span>{rateDisplay}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-text-primary text-base font-outfit font-bold">
+                Rate:
+              </span>
+              <span className=" text-text-secondary text-xs italic font-roboto">
+                {rateDisplay}
+              </span>
             </div>
           )}
 
-          <div className="flex justify-between text-text-secondary">
-            <span>Slippage Tolerance</span>
-            <span className="text-text-primary">{slippage}%</span>
+          <div className="flex justify-between items-center">
+            <span className="text-text-primary text-xs font-outfit font-bold">
+              Slippage Tolerance
+            </span>
+            <span className="text-accent-green font-light font-nunito-sans text-xs">
+              {slippage}%
+            </span>
           </div>
 
           {priceImpact != null && (
-            <div className="flex justify-between text-text-secondary">
-              <span>Price Impact</span>
+            <div className="flex justify-between items-center">
+              <span className="text-text-primary text-xs font-outfit font-bold">
+                Price Impact
+              </span>
               <span
                 className={
                   priceImpact > 5
@@ -367,9 +391,11 @@ function Swap() {
             </div>
           )}
 
-          <div className="flex justify-between text-text-secondary">
-            <span>Min. Received</span>
-            <span className="text-text-primary">
+          <div className="flex justify-between items-center">
+            <span className="text-text-primary text-xs font-outfit font-bold">
+              Min. Received
+            </span>
+            <span className="text-accent-green font-light font-nunito-sans text-xs">
               {preview.toAmount
                 ? (preview.toAmount * (1 - slippage / 100)).toFixed(8)
                 : "—"}{" "}
