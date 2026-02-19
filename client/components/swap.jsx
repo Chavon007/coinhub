@@ -5,6 +5,7 @@ import { LuRefreshCw } from "react-icons/lu";
 import { VscSettings } from "react-icons/vsc";
 import { useBalance } from "@/context/balanceContext";
 import useSwap from "../hook/swaphook";
+import { IoSwapVertical } from "react-icons/io5";
 
 const availableCoin = [
   { value: "ethereum", symbol: "ETH" },
@@ -86,7 +87,7 @@ function Swap() {
 
   return (
     <form
-      className=" w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col gap-4 h-[80vh]"
+      className=" w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col  h-auto"
       onSubmit={handleSubmit}
     >
       <h3 className="flex justify-between items-center">
@@ -104,7 +105,7 @@ function Swap() {
       </h3>
 
       {/* FROM */}
-      <div className="bg-background flex  flex-col gap-2 p-5 rounded-2xl border-gray-300">
+      <div className="bg-background  mt-4 flex  flex-col gap-2 p-5 rounded-2xl border-gray-300">
         <p className="font-nunito-sans text-text-secondary font-medium text-sm">
           YOU PAY
         </p>
@@ -147,7 +148,9 @@ function Swap() {
           </span>
         </p>
       </div>
-
+      <div className="flex my-2  text-text-secondary justify-center items-center text-2xl">
+        <IoSwapVertical />
+      </div>
       {/* TO */}
       <div className="bg-background flex  flex-col gap-2 p-5 rounded-2xl border-gray-300">
         <p className="font-nunito-sans text-text-secondary font-medium text-sm">
@@ -192,7 +195,7 @@ function Swap() {
       )}
 
       <button
-        className="bg-accent-blue w-[180px] rounded-2xl p-2 mx-auto  hover:bg-blue-400 text-base font-roboto text-text-primary font-bold"
+        className="bg-accent-blue w-[180px] mt-7 rounded-2xl p-2 mx-auto  hover:bg-blue-400 text-base font-roboto text-text-primary font-bold"
         type="submit"
         disabled={loading || !fromAmount}
       >
