@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import swap from "../model/swap";
-import wallet from "../model/wallet";
-import walletbalance from "../model/walletbalance";
+import swap from "../model/swap.js";
+import wallet from "../model/wallet.js";
+import walletbalance from "../model/walletbalance.js";
 import {
   fetchExchangeRate,
   calculateExchageRate,
-} from "../services/marketservice";
+} from "../services/marketservice.js";
 
 export const swapCoin = async (req, res) => {
   // create a session
@@ -46,10 +46,12 @@ export const swapCoin = async (req, res) => {
     }
 
     // check balance
-    const fromBalance = await walletbalance.findOne({
-      walletId: userWallet._id,
-      coin: fromCoin,
-    }).session(session);
+    const fromBalance = await walletbalance
+      .findOne({
+        walletId: userWallet._id,
+        coin: fromCoin,
+      })
+      .session(session);
 
     if (!fromBalance || fromBalance.amount < fromAmount) {
       return res
