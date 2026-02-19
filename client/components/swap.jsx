@@ -86,7 +86,7 @@ function Swap() {
 
   return (
     <form
-      className=" w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col  h-[80vh]"
+      className=" w-[40%] mx-auto p-6 rounded-3xl shadow  bg-surface  border border-gray-600 flex flex-col gap-4 h-[80vh]"
       onSubmit={handleSubmit}
     >
       <h3 className="flex justify-between items-center">
@@ -104,53 +104,99 @@ function Swap() {
       </h3>
 
       {/* FROM */}
-      <div>
-        <p>Balance: {getCoinBalance(fromCoin).toFixed(6)}</p>
+      <div className="bg-background flex  flex-col gap-2 p-5 rounded-2xl border-gray-300">
+        <p className="font-nunito-sans text-text-secondary font-medium text-sm">
+          YOU PAY
+        </p>
 
-        <input
-          type="number"
-          placeholder="0.0"
-          value={fromAmount}
-          onChange={(e) => setFromAmount(e.target.value)}
-        />
+        <div className="flex justify-between items-center">
+          <input
+            className=" border-none text-2xl font-roboto text-text-primary placeholder:text-text-primary placeholder:border-none focus:outline-none"
+            type="number"
+            placeholder="0.0"
+            value={fromAmount}
+            onChange={(e) => setFromAmount(e.target.value)}
+          />
 
-        <select
-          value={fromCoin}
-          onChange={(e) => {
-            const value = e.target.value;
-            setFromCoin(value);
-            if (value === toCoin) setToCoin("bitcoin");
-          }}
-        >
-          {availableCoin.map((c) => (
-            <option key={c.value} value={c.value}>
-              {c.symbol}
-            </option>
-          ))}
-        </select>
+          <select
+            className="bg-surface p-1 rounded-2xl text-text-secondary font-roboto text-base font-bold focus:outline-none"
+            value={fromCoin}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFromCoin(value);
+              if (value === toCoin) setToCoin("bitcoin");
+            }}
+          >
+            {availableCoin.map((c) => (
+              <option
+                className="text-text-primary font-roboto text-base font-light"
+                key={c.value}
+                value={c.value}
+              >
+                {c.symbol}
+              </option>
+            ))}
+          </select>
+        </div>
+        <p className="flex items-center  gap-1">
+          <span className="text-text-secondary font-bold font-nunito-sans text-sm">
+            Balance:
+          </span>{" "}
+          <span className="text-accent-green text-base font-roboto font-light">
+            {getCoinBalance(fromCoin).toFixed(6)}
+          </span>
+        </p>
       </div>
 
       {/* TO */}
-      <div>
-        <p>Balance: {getCoinBalance(toCoin).toFixed(6)}</p>
+      <div className="bg-background flex  flex-col gap-2 p-5 rounded-2xl border-gray-300">
+        <p className="font-nunito-sans text-text-secondary font-medium text-sm">
+          You Recieve
+        </p>
 
-        <input type="number" value={toAmount} readOnly />
+        <div className="flex justify-between items-center">
+          <input
+            className="border-none text-2xl font-roboto text-text-primary placeholder:text-text-primary placeholder:border-none focus:outline-none"
+            type="number"
+            value={toAmount}
+            readOnly
+          />
 
-        <select value={toCoin} onChange={(e) => setToCoin(e.target.value)}>
-          {availableCoin.map((c) => (
-            <option key={c.value} value={c.value}>
-              {c.symbol}
-            </option>
-          ))}
-        </select>
+          <select className="bg-surface p-1 rounded-2xl text-text-secondary font-roboto text-base font-bold focus:outline-none value={toCoin} onChange={(e) => setToCoin(e.target.value)}">
+            {availableCoin.map((c) => (
+              <option
+                className="text-text-primary font-roboto text-base font-light"
+                key={c.value}
+                value={c.value}
+              >
+                {c.symbol}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <p className="flex items-center  gap-1">
+          <span className="text-text-secondary font-bold font-nunito-sans text-sm">
+            Balance:
+          </span>{" "}
+          <span className="text-accent-green text-base font-roboto font-light">
+            {getCoinBalance(toCoin).toFixed(6)}
+          </span>
+        </p>
       </div>
 
       {/* STATUS */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      {error && <p className="text-base font-outfit text-red-500">{error}</p>}
+      {success && (
+        <p className="text-base font-outfit text-green-500">{success}</p>
+      )}
 
-      <button type="submit" disabled={loading || !fromAmount}>
-        {loading ? "Swapping..." : "Swap"}
+      <button
+        className="bg-accent-blue w-[180px] rounded-2xl p-2 mx-auto  hover:bg-blue-400 text-base font-roboto text-text-primary font-bold"
+        type="submit"
+        disabled={loading || !fromAmount}
+      >
+        {loading ? "SWAPPING..." : "SWAP"}
       </button>
     </form>
   );
