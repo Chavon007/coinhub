@@ -121,10 +121,10 @@ function Swap() {
     if (!isNaN(num) && num > 0 && num <= 50) setslippage(num);
   };
 
-  const handleMaxAmount = () => {
-    const bal = getCoinBalance(fromCoin);
-    setFromAmount(bal > 0 ? String(bal) : "");
-  };
+  // const handleMaxAmount = () => {
+  //   const bal = getCoinBalance(fromCoin);
+  //   setFromAmount(bal > 0 ? String(bal) : "");
+  // };
 
   // Validation
   const validateSwap = () => {
@@ -241,9 +241,7 @@ function Swap() {
               <span>%</span>
             </div>
           </div>
-          {slippage > 5 && (
-            <p>High slippage — your trade may be frontrun</p>
-          )}
+          {slippage > 5 && <p>High slippage — your trade may be frontrun</p>}
         </div>
       )}
 
@@ -289,7 +287,7 @@ function Swap() {
           </span>
         </p>
       </div>
-     <button
+      <button
         type="button"
         onClick={handleFlip}
         title="Flip pair"
@@ -304,17 +302,17 @@ function Swap() {
         </p>
 
         <div className="flex justify-between items-center">
-          <input
-            className="border-none text-2xl font-roboto text-text-primary placeholder:text-text-primary placeholder:border-none focus:outline-none"
-            type="number"
-            value={toAmount}
-            readOnly
-          />
-
+          <div>
+            {previewLoading ? (
+              <span>Fetching rate…</span>
+            ) : (
+              <span>{toAmountDisplay}</span>
+            )}
+          </div>
           <select
             className="bg-surface p-1 rounded-2xl text-text-secondary font-roboto text-base font-bold focus:outline-none"
             value={toCoin}
-            onChange={(e) => setToCoin(e.target.value)}
+            onChange={handleToChange}
           >
             {availableCoin.map((c) => (
               <option
@@ -333,23 +331,68 @@ function Swap() {
             Balance:
           </span>{" "}
           <span className="text-accent-green text-base font-roboto font-light">
-            {getCoinBalance(toCoin).toFixed(6)}
+            {getCoinBalance(toCoin).toFixed(6)} {getCoinSymbol(toCoin)}
           </span>
         </p>
       </div>
 
+      {preview && !previewLoading && (
+        <div>
+          {rateDisplay && (
+            <div>
+              <span>Rate</span>
+              <span>{rateDisplay}</span>
+            </div>
+          )}
+
+          <div className="flex justify-between text-text-secondary">
+            <span>Slippage Tolerance</span>
+            <span className="text-text-primary">{slippage}%</span>
+          </div>
+
+          {priceImpact != null && (
+            <div className="flex justify-between text-text-secondary">
+              <span>Price Impact</span>
+              <span
+                className={
+                  priceImpact > 5
+                    ? "text-red-400"
+                    : priceImpact > 2
+                      ? "text-yellow-400"
+                      : "text-accent-green"
+                }
+              >
+                {priceImpact.toFixed(2)}%
+              </span>
+            </div>
+          )}
+
+          <div className="flex justify-between text-text-secondary">
+            <span>Min. Received</span>
+            <span className="text-text-primary">
+              {preview.toAmount
+                ? (preview.toAmount * (1 - slippage / 100)).toFixed(8)
+                : "—"}{" "}
+              {getCoinSymbol(toCoin)}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* STATUS */}
-      {error && <p className="text-base font-outfit text-red-500">{error}</p>}
+      {displayError && (
+        <p className="text-base font-outfit text-red-500">{displayError}</p>
+      )}
       {success && (
         <p className="text-base font-outfit text-green-500">{success}</p>
       )}
 
       <button
-        className="bg-accent-blue w-[180px] mt-7 rounded-2xl p-2 mx-auto  hover:bg-blue-400 text-base font-roboto text-text-primary font-bold"
+        className="bg-accent-blue w-44 mt-2 rounded-2xl py-2 px-4 mx-auto hover:bg-blue-400 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-roboto text-text-primary font-bold transition-colors"
         type="submit"
-        disabled={loading || !fromAmount}
+        disabled={submitDisabled}
       >
-        {loading ? "SWAPPING..." : "SWAP"}
+        {loading ? "SWAPPING…" : "SWAP"}
       </button>
     </form>
   );

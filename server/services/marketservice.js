@@ -95,8 +95,8 @@ export const getPortfolioChangeService = async (walletId) => {
 
 //  fetch exchange rate
 export const fetchExchangeRate = async () => {
-  const res = await axios.get(
-    " https://api.coingecko.com/api/v3/simple/price",
+  const {data} = await axios.get(
+    "https://api.coingecko.com/api/v3/simple/price",
     {
       params: {
         ids: "bitcoin,ethereum,solana,ripple",
