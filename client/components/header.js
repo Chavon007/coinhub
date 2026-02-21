@@ -44,7 +44,7 @@ function Header() {
           </Link>
           <Link
             className="text-text-secondary font-roboto font-bold hover:text-text-primary"
-            href="/login"
+            href="/insight"
           >
             AI Insight
           </Link>
@@ -96,7 +96,7 @@ function Header() {
               >
                 {item}
               </Link>
-            )
+            ),
           )}
           <button
             className="flex items-center gap-1"

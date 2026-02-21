@@ -36,8 +36,6 @@ function PriceInsight({
                   <p>{currentPrice}</p>
                   <small>{percent}</small>
                 </div>
-
-                <div>{days({ mainDays })}</div>
               </div>
 
               <div>
