@@ -7,13 +7,13 @@ import SignalInsight from "./Signalinsight";
 
 function MainCard({ data }) {
   return (
-    <Card>
-      <div>
+    <Card className="flex flex-col gap-2">
+      <div className="flex justify-between mt-[20px]">
         <InsightHeader {...data.header} />
         <PriceInsight {...data.price} />
       </div>
 
-      <div>
+      <div className="flex">
         <SentimentInsight {...data.sentiment} />
         <SignalInsight {...data.signal} />
         <ScenarioSimulator {...data.scenario} />
