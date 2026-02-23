@@ -4,7 +4,6 @@ import Balance from "../model/walletbalance.js";
 import { coinGeckoLimiter } from "../utliz/rateLimiter.js";
 import { groqLimiter } from "../utliz/rateLimiter.js";
 import OpenAI from "openai";
-import { response } from "express";
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 const groqai = new OpenAI({
@@ -134,7 +133,7 @@ export const fetchTopCoinMover = async () => {
   try {
     const { data } = await axios.get(`${COINGECKO_API_URL}/coins/markets`, {
       params: {
-        vs_currencies: "usd",
+        vs_currency: "usd",
         order: "market_cap_desc",
         per_page: 10,
         page: 1,
@@ -251,7 +250,7 @@ export const fetchCoinInsight = async (coinId, ticker) => {
   return {
     header: {
       title: "LIVE INTELLIGENCE",
-      message: `${coin.name} is moving ${coin.change24h.toFixed(2)}% in the last 24h.`,
+      message: `${coin.name} is moving ${coin.change24h.toFixed(2)}% in the last 24h. We’re analyzing whale movements, sentiment trends, and AI signals to uncover where the market could head next.`,
     },
     price: {
       coin: coin.name,

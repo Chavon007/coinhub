@@ -12,6 +12,7 @@ import aiInsightRoute from "./route/insightroute.js";
 import walletbalanceRoute from "./route/walletbalance.js";
 import TransactionRoute from "./route/transaction.js";
 import PortfolioRoute from "./route/portfoilo.js";
+import aiCoinInsightRoute from "./route/aicoininsight.js";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/api", marketMoverRoute);
 app.use("/api", TransactionRoute);
 app.use("/api", PortfolioRoute);
 app.use("/api", walletbalanceRoute);
+app.use("/api", aiCoinInsightRoute);
 app.get("/", (req, res) => {
   res.send("ConinHub backend is running");
 });
