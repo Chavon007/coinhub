@@ -14,6 +14,9 @@ function Ethereum() {
           currentPrice: "$3,245",
           percent: "+4.2%",
           timeframeTabs: ["1D", "1W", "1M"],
+          conference: "94.8%",
+          target: "$7,800",
+          volatility: "Medium",
         },
         sentiment: {
           sentimentRadius: "High",
