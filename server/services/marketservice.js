@@ -2,8 +2,15 @@ import axios from "axios";
 import { getCache, setCache } from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
 import { coinGeckoLimiter } from "../utliz/rateLimiter.js";
+import { groqLimiter } from "../utliz/rateLimiter.js";
+import OpenAI from "openai";
+import { response } from "express";
 
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
+const groqai = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
+});
 
 export const fetchMarketMovers = async () => {
   const cacheKey = "marketMovers";
@@ -95,7 +102,7 @@ export const getPortfolioChangeService = async (walletId) => {
 
 //  fetch exchange rate
 export const fetchExchangeRate = async () => {
-  const {data} = await axios.get(
+  const { data } = await axios.get(
     "https://api.coingecko.com/api/v3/simple/price",
     {
       params: {
@@ -119,4 +126,150 @@ export const calculateExchageRate = (prices, fromCoin, toCoin) => {
   const rate = fromPriceUSD / toPriceUSD;
 
   return rate;
+};
+
+// fetch top market mover whale activity
+
+export const fetchTopCoinMover = async () => {
+  try {
+    const { data } = await axios.get(`${COINGECKO_API_URL}/coins/markets`, {
+      params: {
+        vs_currencies: "usd",
+        order: "market_cap_desc",
+        per_page: 10,
+        page: 1,
+        price_change_percentage: "24h",
+      },
+    });
+
+    // Use change24h & marketCap as whale proxy
+
+    return data.map((coin) => ({
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol,
+      image: coin.image,
+      currentPrice: coin.current_price,
+      change24h: coin.price_change_percentage_24h,
+      marketCap: coin.market_cap,
+      whaleProxy: coin.market_cap * Math.abs(coin.price_change_percentage_24h),
+    }));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+// fetch sentiment from crypto newws Api
+
+export const fetchSentiment = async (ticker = "BTC") => {
+  try {
+    const { data } = await axios.get("https://cryptopanic.com/api/v1/posts/", {
+      params: {
+        currencies: ticker,
+
+        auth_token: process.env.CRYPTOPANIC_API_KEY,
+      },
+    });
+
+    // calculate simple sentiment score
+
+    const sentimentScore = data.results?.reduce((acc, a) => {
+      if (a.sentiment === "positive") return acc + 1;
+      if (a.sentiment === "negative") return acc - 1;
+
+      return acc;
+    }, 0);
+
+    return { score: sentimentScore || 0, articles: data.results || [] };
+  } catch (err) {
+    console.error(err);
+    return { score: 0, article: [] };
+  }
+};
+
+// AI prediction with groq ai
+
+export const fetchPrediction = async (coinData) => {
+  const { name, currentPrice, change24h, whaleProxy, sentimentScore } =
+    coinData;
+
+  const prompt = `You are a crypto market analyst. Analyze this crypto data and return JSON only. 
+  Coin:${name}
+  Price: ${currentPrice},
+  24h Change:${change24h},
+  Whale Activity: ${whaleProxy},
+  Sentiment Score:${sentimentScore}
+  
+  
+  Return only in JSON array with a single object:[{
+  "prediction": "expected % move in the next 24h", "advice": "1-2 sentence advice for the traders" }
+  ]
+  `;
+  try {
+    const res = await groqLimiter.execute(() =>
+      groqai.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
+          },
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        max_tokens: 1000,
+        temperature: 0.3,
+      }),
+    );
+
+    const content = res.choices[0].message.content.trim();
+    const parsed = JSON.parse(content);
+
+    return parsed[0] || { prediction: "0%", advice: "No advice available" };
+  } catch (err) {
+    console.error(err);
+    return { prediction: "0%", advice: "Prediction temporarily unavailable" };
+  }
+};
+
+// coimbine the prediction, sentiment and top coin movers
+export const fetchCoinInsight = async (coinId, ticker) => {
+  const movers = await fetchTopCoinMover();
+  const coin = movers.find((c) => c.id === coinId);
+  if (!coin) return null;
+
+  const sentiment = await fetchSentiment(ticker);
+  const aiPrediction = await fetchPrediction({
+    ...coin,
+    sentimentScore: sentiment.score,
+  });
+
+  return {
+    header: {
+      title: "LIVE INTELLIGENCE",
+      message: `${coin.name} is moving ${coin.change24h.toFixed(2)}% in the last 24h.`,
+    },
+    price: {
+      coin: coin.name,
+      currentPrice: `$${coin.currentPrice}`,
+      percent: `${coin.change24h.toFixed(2)}%`,
+      marketCap: coin.marketCap,
+      whaleActivity: coin.whaleProxy.toFixed(2),
+    },
+    sentiment: {
+      score: sentiment.score,
+    },
+    signal: {
+      aiPrediction: aiPrediction.prediction,
+      advice: aiPrediction.advice,
+    },
+    scenario: {
+      forecast: "Groq AI Prediction",
+      forecastPercent: aiPrediction.prediction,
+    },
+  };
 };

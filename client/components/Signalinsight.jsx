@@ -4,7 +4,7 @@ function SignalItems({ label, value }) {
   return (
     <div className="flex  justify-between items-center">
       <h3 className="text-text-secondary uppercase font-light text-sm font-roboto">{label}</h3>
-      <p className="md:w-[25%]  text-accent-green text-sm font-bold  font-nunito-sans italic">{value}</p>
+      <p className="md:w-[25%] lg:w-[35%]  text-accent-green text-sm font-bold  font-nunito-sans italic">{value}</p>
     </div>
   );
 }
