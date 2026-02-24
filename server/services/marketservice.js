@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import axios from "axios";
 import { getCache, setCache } from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
@@ -5,6 +6,7 @@ import { coinGeckoLimiter } from "../utliz/rateLimiter.js";
 import { groqLimiter } from "../utliz/rateLimiter.js";
 import OpenAI from "openai";
 
+dotenv.config();
 const COINGECKO_API_URL = "https://api.coingecko.com/api/v3";
 const groqai = new OpenAI({
   apiKey: process.env.GROQ_API_KEY,

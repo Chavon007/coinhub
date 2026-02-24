@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const coinInsightSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Types.ObjectId(),
+      type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true,
     },
