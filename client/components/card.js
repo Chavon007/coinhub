@@ -1,8 +1,8 @@
 function Card({children, className=""}) {
     return(
-        <divv>
+        <div>
             {children}
-        </divv>
+        </div>
     )
 }
 

@@ -39,6 +39,14 @@ const coinInsightSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    sentimentRadius: {
+      type: String,
+      required: true,
+    },
+    sentimentRadiusMessage: {
+      type: String,
+      required: true,
+    },
     aiPrediction: {
       type: String,
       required: true,
@@ -47,12 +55,28 @@ const coinInsightSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    institutionalFlow: {
+      type: String,
+      required: true,
+    },
+    momentumScore: {
+      type: String,
+      required: true,
+    },
     forecast: {
       type: String,
       required: true,
     },
     forecastPercent: {
-      type: Number,
+      type: String,
+      required: true,
+    },
+    portfolioImpact: {
+      type: String,
+      required: true,
+    },
+    correlation: {
+      type: String,
       required: true,
     },
   },

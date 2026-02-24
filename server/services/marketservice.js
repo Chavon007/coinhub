@@ -260,17 +260,38 @@ export const fetchCoinInsight = async (coinId, ticker) => {
       percent: `${coin.change24h.toFixed(2)}%`,
       marketCap: coin.marketCap,
       whaleActivity: coin.whaleProxy.toFixed(2),
+      timeFrameTabs: ["1H", "24H", "7D"],
+      conference: "N/A",
+      target: "N/A",
+      volatility: "N/A",
     },
     sentiment: {
       score: sentiment.score,
+      sentimentRadius:
+        sentiment.score > 0
+          ? "BULLISH"
+          : sentiment.score < 0
+            ? "BEARISH"
+            : "NEUTRAL",
     },
+    sentimentRadiusMessage:
+      sentiment.score > 0
+        ? "Market mood is leaning positive."
+        : sentiment.score < 0
+          ? "Market mood is leaning negative."
+          : "Market mood is neutral",
     signal: {
       aiPrediction: aiPrediction.prediction,
       advice: aiPrediction.advice,
+      institutionalFlow: coin.marketCap > 1e10 ? "HIGH" : "MODERATE",
+      momentumScore: `${coin.change24h.toFixed(1)}%`,
+      whaleActivity: coin.whaleProxy.toFixed(2),
     },
     scenario: {
       forecast: "Groq AI Prediction",
       forecastPercent: aiPrediction.prediction,
+      portfolioImpact: "N/A",
+      correlation: "N/A",
     },
   };
 };
