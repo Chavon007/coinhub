@@ -1,6 +1,6 @@
 import { PiGauge } from "react-icons/pi";
 
-function SentimentInsight({ sentimentRadius, sentimentRadiusMessage }) {
+function SentimentInsight({ sentimentRadius, sentimentRadiusMessage, score }) {
   return (
     <div className="bg-surface rounded-2xl border border-gray-600 h-[300px]">
       <div className="p-4">
@@ -13,6 +13,7 @@ function SentimentInsight({ sentimentRadius, sentimentRadiusMessage }) {
           </span>
         </h5>
         <div className="flex flex-col justify-center items-center h-[35vh] md:h-[20vh] lg:h-[35vh] ">
+          <p>{score}</p>
           <p className=" text-accent-green font-outfit text-xl font-medium uppercase">
             {sentimentRadius}
           </p>

@@ -19,11 +19,21 @@ export const aiCoinInsight = async (req, res) => {
       percent: insight.price.percent,
       marketCap: insight.price.marketCap,
       whaleActivity: insight.price.whaleActivity,
+      timeFrameTabs: insight.price.timeFrameTabs,
+      confidence: insight.price.confidence,
+      target: insight.price.target,
+      volatility: insight.price.volatility,
       score: insight.sentiment.score,
+      sentimentRadius: insight.sentiment.sentimentRadius,
+      sentimentRadiusMessage: insight.sentiment.sentimentRadiusMessage,
       aiPrediction: insight.signal.aiPrediction,
       advice: insight.signal.advice,
+      institutionalFlow: insight.signal.institutionalFlow,
+      momentumScore: insight.signal.momentumScore,
       forecast: insight.scenario.forecast,
       forecastPercent: insight.scenario.forecastPercent,
+      portfolioImpact: insight.scenario.portfolioImpact,
+      correlation: insight.scenario.correlation,
     });
 
     res

@@ -200,11 +200,18 @@ export const fetchPrediction = async (coinData) => {
   Price: ${currentPrice},
   24h Change:${change24h},
   Whale Activity: ${whaleProxy},
-  Sentiment Score:${sentimentScore}
-  
-  
+  Sentiment Score:${sentimentScore} (positive = bullish news, negative = bearish news, 0 = neutral),
+ 
   Return only in JSON array with a single object:[{
-  "prediction": "expected % move in the next 24h", "advice": "1-2 sentence advice for the traders" }
+  "prediction": "expected % move in the next 24h",
+  "advice": "1-2 sentence advice for the traders" },
+ "sentimentRadius": "one word: BULLISH, BEARISH, or NEUTRAL",
+    "sentimentRadiusMessage": "1 sentence explaining the market mood based on the data",
+    "institutionalFlow": "HIGH, MODERATE, or LOW based on market cap and whale activity",
+    "momentumScore": "a score from 0-100 based on price change and whale activity",
+    "confidence": "percentage e.g 72% - how confident the prediction is",
+    "target": "price target in next 24h e.g $95.00",
+    "volatility": "LOW, MEDIUM, or HIGH based on 24h change magnitude"
   ]
   `;
   try {
@@ -261,30 +268,20 @@ export const fetchCoinInsight = async (coinId, ticker) => {
       marketCap: coin.marketCap,
       whaleActivity: coin.whaleProxy.toFixed(2),
       timeFrameTabs: ["1H", "24H", "7D"],
-      conference: "N/A",
-      target: "N/A",
-      volatility: "N/A",
+      confidence: aiPrediction.confidence,
+      target: aiPrediction.target,
+      volatility: aiPrediction.volatility,
     },
     sentiment: {
       score: sentiment.score,
-      sentimentRadius:
-        sentiment.score > 0
-          ? "BULLISH"
-          : sentiment.score < 0
-            ? "BEARISH"
-            : "NEUTRAL",
+      sentimentRadius: aiPrediction.sentimentRadius,
+      sentimentRadiusMessage: aiPrediction.sentimentRadiusMessage,
     },
-    sentimentRadiusMessage:
-      sentiment.score > 0
-        ? "Market mood is leaning positive."
-        : sentiment.score < 0
-          ? "Market mood is leaning negative."
-          : "Market mood is neutral",
     signal: {
       aiPrediction: aiPrediction.prediction,
       advice: aiPrediction.advice,
-      institutionalFlow: coin.marketCap > 1e10 ? "HIGH" : "MODERATE",
-      momentumScore: `${coin.change24h.toFixed(1)}%`,
+      institutionalFlow: aiPrediction.institutionalFlow,
+      momentumScore: aiPrediction.momentumScore,
       whaleActivity: coin.whaleProxy.toFixed(2),
     },
     scenario: {

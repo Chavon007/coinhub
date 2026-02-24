@@ -79,6 +79,18 @@ const coinInsightSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    confidence: {
+      type: String,
+      required: true,
+    },
+    target: {
+      type: String,
+      required: true,
+    },
+    volatility: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true },
 );
