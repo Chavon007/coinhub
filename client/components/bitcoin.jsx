@@ -1,12 +1,17 @@
+import { useEffect } from "react";
 import MainCard from "./maininsightcard";
-import useCoinInsight from "@/hook/aicoininsighthook";
+import useAllCoinInsight from "@/hook/aicoininsighthook";
 function Bitcoin() {
-  const { coinInsight, loading, error } = useCoinInsight("bitcoin", "BTC");
+  const { loading, error, selectedCoin, selectCoin } = useAllCoinInsight();
+
+  useEffect(() => {
+    selectCoin("bitcon");
+  }, [selectCoin]);
 
   if (loading) return <p>Loading....</p>;
   if (error) return <p>{error}</p>;
-  if (!coinInsight) return null;
-  return <MainCard data={coinInsight} />;
+  if (!selectedCoin) return null;
+  return <MainCard data={selectedCoin} />;
 }
 
 export default Bitcoin;

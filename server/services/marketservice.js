@@ -250,7 +250,7 @@ export const fetchCoinInsight = async (coinId, ticker) => {
   const cacheKey = `coinInsight${coinId}`;
 
   const cached = getCache(cacheKey);
-  if (cacheKey) {
+  if (cached) {
     console.log(" cache hit", coinId);
     return cached;
   }
@@ -314,7 +314,20 @@ export const fetchCoinInsight = async (coinId, ticker) => {
 export const preloaderAllInsight = async () => {
   const movers = await fetchTopCoinMover();
 
-  return Promise.all(
-    movers.map((coin) => fetchCoinInsight(coin.id, coin.sysmbol)),
-  );
+  const results = [];
+
+  for (const coin of movers) {
+    try {
+      const insight = await fetchCoinInsight(coin.id, coin.symbol);
+
+      results.push(insight);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    } catch (err) {
+      console.error(err);
+      results.push(null);
+    }
+  }
+
+  return results.filter(Boolean);
 };
