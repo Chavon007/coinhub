@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+
 import axios from "axios";
 import { getCache, setCache } from "../utliz/cache.js";
 import Balance from "../model/walletbalance.js";
@@ -244,8 +245,18 @@ export const fetchPrediction = async (coinData) => {
   }
 };
 
-// coimbine the prediction, sentiment and top coin movers
+// combine the prediction, sentiment and top coin movers
 export const fetchCoinInsight = async (coinId, ticker) => {
+  const cacheKey = `coinInsight${coinId}`;
+
+  const cached = getCache(cacheKey);
+  if (cacheKey) {
+    console.log(" cache hit", coinId);
+    return cached;
+  }
+
+  console.log("Generating insight", coinId);
+
   const movers = await fetchTopCoinMover();
   const coin = movers.find((c) => c.id === coinId);
   if (!coin) return null;
@@ -256,7 +267,7 @@ export const fetchCoinInsight = async (coinId, ticker) => {
     sentimentScore: sentiment.score,
   });
 
-  return {
+  const insight = {
     header: {
       title: "LIVE INTELLIGENCE",
       message: `${coin.name} is moving ${coin.change24h.toFixed(2)}% in the last 24h. We’re analyzing whale movements, sentiment trends, and AI signals to uncover where the market could head next.`,
@@ -291,4 +302,19 @@ export const fetchCoinInsight = async (coinId, ticker) => {
       correlation: "N/A",
     },
   };
+
+  // cache for 5 mins
+  setCache(cacheKey, insight, 5 * 60 * 1000);
+
+  return insight;
+};
+
+//  preload all coin insight
+
+export const preloaderAllInsight = async () => {
+  const movers = await fetchTopCoinMover();
+
+  return Promise.all(
+    movers.map((coin) => fetchCoinInsight(coin.id, coin.sysmbol)),
+  );
 };

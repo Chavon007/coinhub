@@ -1,4 +1,7 @@
-import { fetchCoinInsight } from "../services/marketservice.js";
+import {
+  fetchCoinInsight,
+  preloaderAllInsight,
+} from "../services/marketservice.js";
 import CoinInsightModel from "../model/aiCoinInsight.js";
 
 export const aiCoinInsight = async (req, res) => {
@@ -39,6 +42,16 @@ export const aiCoinInsight = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Coin Insight Generated", insight });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const aiCoinInsightAll = async (req, res) => {
+  try {
+    const insights = await preloaderAllInsight();
+
+    res.status(200).json({ success: true, insights });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
