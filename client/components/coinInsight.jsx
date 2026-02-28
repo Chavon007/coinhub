@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-// import Ethereum from "../components/ethereum";
-// import Bitcoin from "../components/bitcoin";
-// import Solana from "../components/solana";
-// import Ripple from "../components/xrp";
+
 import useAllCoinInsight from "@/hook/aicoininsighthook";
 import MainCard from "./maininsightcard";
 const coinSelection = [

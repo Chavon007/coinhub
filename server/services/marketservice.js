@@ -186,10 +186,10 @@ export const fetchSentiment = async (ticker = "BTC") => {
     // calculate simple sentiment score
 
     const sentimentScore = data.results?.reduce((acc, a) => {
-      if (a.sentiment === "positive") return acc + 1;
-      if (a.sentiment === "negative") return acc - 1;
+      const bullish = a.votes?.positive || 0;
+      const bearish = a.votes?.negative || 0;
 
-      return acc;
+      return acc + bullish - bearish;
     }, 0);
 
     return { score: sentimentScore || 0, articles: data.results || [] };

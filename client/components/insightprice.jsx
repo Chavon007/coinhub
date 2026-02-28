@@ -6,13 +6,11 @@ function PriceInsight({
   coin,
   currentPrice,
   percent,
-  timeframeTabs,
-  conference,
+  timeFrameTabs,
+  confidence,
   target,
   volatility,
 }) {
-  const [activeTab, setActiveTabe] = useState(true);
-
   return (
     <div className="w-[95%] mx-auto md:mx-0  md:w-[62%] bg-surface rounded-2xl border border-gray-700">
       <div className=" flex flex-col p-3">
@@ -31,7 +29,7 @@ function PriceInsight({
           </div>
 
           <div className="w-[35%] md:w-[25%] bg-background p-2 rounded-xl flex justify-between items-center">
-            {timeframeTabs?.map((t) => (
+            {timeFrameTabs?.map((t) => (
               <button
                 className="text-text-primary font-bold font-outfit text-sm"
                 key={t}
@@ -44,15 +42,17 @@ function PriceInsight({
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="w-[70%]">graph here</div>
+          <div className="w-[70%] text-center text-2xl text-accent-blue uppercase">
+            graph here
+          </div>
 
-          <div className="w-[140px] md:w-[300px]  h-auto flex flex-col gap-2 p-3 mt-2">
+          <div className="w-[140px]   h-auto flex flex-col gap-2 p-3 mt-2">
             <p className="p-3 flex flex-col">
               <span className="text-text-secondary font-roboto font-light text-xl md:text-base uppercase">
                 Confidence
               </span>
               <span className="text-accent-green font-orbitron text-xl font-bold">
-                {conference}
+                {confidence}
               </span>
             </p>
             <p className="p-3 flex flex-col">

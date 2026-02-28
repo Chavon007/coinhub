@@ -10,7 +10,7 @@ function InsightHeader({ title, message }) {
           </span>
           <span>{title}</span>
         </h4>
-        <p className="mt-4 w-[330px] md:w-[200px] lg:w-[280px] text-text-secondary text-base leading-[35px] font-light font-outfit">{message}</p>
+        <p className="mt-4 w-[330px] md:w-[250px] lg:w-[280px] text-text-secondary text-base leading-[35px] font-light font-outfit">{message}</p>
       </div>
     </div>
   );

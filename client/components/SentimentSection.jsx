@@ -13,7 +13,11 @@ function SentimentInsight({ sentimentRadius, sentimentRadiusMessage, score }) {
           </span>
         </h5>
         <div className="flex flex-col justify-center items-center h-[35vh] md:h-[20vh] lg:h-[35vh] ">
-          <p>{score}</p>
+          <p
+            className={`text-2xl font-roboto ${score?.toString().startsWith("-") ? "text-red-500" : "text-accent-green"}`}
+          >
+            {score}
+          </p>
           <p className=" text-accent-green font-outfit text-xl font-medium uppercase">
             {sentimentRadius}
           </p>
