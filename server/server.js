@@ -4,6 +4,7 @@ import cookies from "cookie-parser";
 import cors from "cors";
 import dbConfig from "./config/database.js";
 
+import { preloaderAllInsight } from "./services/marketservice.js";
 import marketMoverRoute from "./route/marketroute.js";
 import swapRoute from "./route/swap.js";
 import authRoutes from "./route/auth.js";
@@ -44,4 +45,8 @@ app.get("/", (req, res) => {
 });
 app.listen(PORT, () => {
   console.log(`Server is runing on port http://localhost:${PORT}`);
+
+  preloaderAllInsight()
+    .then(() => console.log("Coin insights preloaded"))
+    .catch((err) => console.error("Coin preload failed", err));
 });

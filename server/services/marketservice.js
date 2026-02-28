@@ -133,6 +133,11 @@ export const calculateExchageRate = (prices, fromCoin, toCoin) => {
 // fetch top market mover whale activity
 
 export const fetchTopCoinMover = async () => {
+  const cacheKey = "topCoinMovers";
+  const cached = getCache(cacheKey);
+
+  if (cached) return cached;
+
   try {
     const { data } = await axios.get(`${COINGECKO_API_URL}/coins/markets`, {
       params: {
@@ -146,7 +151,7 @@ export const fetchTopCoinMover = async () => {
 
     // Use change24h & marketCap as whale proxy
 
-    return data.map((coin) => ({
+    const results = data.map((coin) => ({
       id: coin.id,
       name: coin.name,
       symbol: coin.symbol,
@@ -156,6 +161,10 @@ export const fetchTopCoinMover = async () => {
       marketCap: coin.market_cap,
       whaleProxy: coin.market_cap * Math.abs(coin.price_change_percentage_24h),
     }));
+
+    setCache(cacheKey, results, 3 * 6 * 1000);
+
+    return results;
   } catch (err) {
     console.error(err);
     throw err;
@@ -314,20 +323,11 @@ export const fetchCoinInsight = async (coinId, ticker) => {
 export const preloaderAllInsight = async () => {
   const movers = await fetchTopCoinMover();
 
-  const results = [];
+  const results = await Promise.allSettled(
+    movers.map((coin) => fetchCoinInsight(coin.id, coin.symbol)),
+  );
 
-  for (const coin of movers) {
-    try {
-      const insight = await fetchCoinInsight(coin.id, coin.symbol);
-
-      results.push(insight);
-
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-    } catch (err) {
-      console.error(err);
-      results.push(null);
-    }
-  }
-
-  return results.filter(Boolean);
+  return results
+    .filter((r) => r.status === "fulfilled" && r.value)
+    .map((r) => r.value);
 };

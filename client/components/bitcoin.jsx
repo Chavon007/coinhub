@@ -5,7 +5,7 @@ function Bitcoin() {
   const { loading, error, selectedCoin, selectCoin } = useAllCoinInsight();
 
   useEffect(() => {
-    selectCoin("bitcon");
+    selectCoin("bitcoin");
   }, [selectCoin]);
 
   if (loading) return <p>Loading....</p>;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function useAllCoinInsight(coinId, ticker) {
   const [loading, setLoading] = useState(false);
@@ -14,13 +14,21 @@ function useAllCoinInsight(coinId, ticker) {
         const res = await fetch(`http://localhost:4000/api/coininsight/all`, {
           credentials: "include",
         });
+
         const data = await res.json();
         if (!res.ok) {
           throw new Error(data.message || "Failed to fetch insight");
         }
 
-        setCoinInsight(data.insight);
-        if (data.insight.length > 0) setSelectedCoin(data.insight[0]);
+        const insight = (data.insights || []).filter((c) => c?.price?.coin);
+        setCoinInsight(insight);
+
+        const defaultCoin = insight.find(
+          (c) => c.price.coin.toLowerCase() === "ethereum",
+        );
+
+        if (defaultCoin) setSelectedCoin(defaultCoin);
+        else if (insight.length > 0) setSelectedCoin(insight[0]);
       } catch (err) {
         setError(err.message || "Failed to fetch");
       } finally {
@@ -30,13 +38,17 @@ function useAllCoinInsight(coinId, ticker) {
     getCoinInsight();
   }, []);
 
-  const selectCoin = (coinIdOrName) => {
-    const coin = coinInsight.find(
-      (c) => c.price.coin === coinIdOrName || c.coinId === coinIdOrName,
-    );
+  const selectCoin = useCallback(
+    (coinIdOrName) => {
+      if (!coinInsight.length) return;
+      const coin = coinInsight.find(
+        (c) => c.price.coin.toLowerCase() === coinIdOrName.toLowerCase(),
+      );
 
-    if (coin) setSelectedCoin(coin);
-  };
+      if (coin) setSelectedCoin(coin);
+    },
+    [coinInsight],
+  );
 
   return { loading, error, selectedCoin, selectCoin };
 }

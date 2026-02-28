@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import MainCard from "./maininsightcard";
-import useCoinInsight from "@/hook/aicoininsighthook";
+
 import useAllCoinInsight from "@/hook/aicoininsighthook";
 function Solana() {
   const { loading, error, selectCoin, selectedCoin } = useAllCoinInsight();
