@@ -21,6 +21,7 @@ export const aiCoinInsight = async (req, res) => {
       currentPrice: insight.price.currentPrice,
       percent: insight.price.percent,
       marketCap: insight.price.marketCap,
+      corridor: insight.price.corridor,
       whaleActivity: insight.price.whaleActivity,
       timeFrameTabs: insight.price.timeFrameTabs,
       confidence: insight.price.confidence,

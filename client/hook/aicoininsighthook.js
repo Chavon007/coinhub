@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-function useAllCoinInsight(coinId, ticker) {
+function useAllCoinInsight() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [coinInsight, setCoinInsight] = useState([]);

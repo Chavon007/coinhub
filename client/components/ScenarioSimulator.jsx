@@ -22,7 +22,7 @@ function ScenarioSimulator({
           <p className="text-text-secondary uppercase font-light text-sm font-roboto">
             {forecast}
           </p>
-          <p className="text-accent-green font-outfit text-xl font-medium uppercase">
+          <p className={` ${forecastPercent?.startsWith("-") ? "text-red-500" : "text-accent-green"} font-outfit text-xl font-medium uppercase`}>
             {forecastPercent}
           </p>
         </div>

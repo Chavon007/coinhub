@@ -276,6 +276,27 @@ export const fetchCoinInsight = async (coinId, ticker) => {
     sentimentScore: sentiment.score,
   });
 
+  const generateCorridorData = (
+    currentPrice,
+    predictionPercent,
+    volatility,
+  ) => {
+    const predNum = parseFloat(predictionPercent?.replace("%", "") || "0");
+    const band =
+      { LOW: 0.008, MEDIUM: 0.015, HIGH: 0.025 }[volatility] ?? 0.015;
+
+    return ["1H", "4H", "8H", "12H", "16H", "20H", "24H"].map((time, i) => {
+      const progress = i / 6;
+      const price = currentPrice * (1 + (predNum / 100) * progress);
+      return {
+        time,
+        price: +price.toFixed(2),
+        upper: +(price * (1 + band)).toFixed(2),
+        lower: +(price * (1 - band)).toFixed(2),
+      };
+    });
+  };
+
   const insight = {
     header: {
       title: "LIVE INTELLIGENCE",
@@ -291,6 +312,11 @@ export const fetchCoinInsight = async (coinId, ticker) => {
       confidence: aiPrediction.confidence,
       target: aiPrediction.target,
       volatility: aiPrediction.volatility,
+      corridor: generateCorridorData(
+        coin.currentPrice,
+        aiPrediction.prediction,
+        aiPrediction.volatility,
+      ),
     },
     sentiment: {
       score: sentiment.score,

@@ -36,9 +36,9 @@ function MainAiInsight() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   return (
-    <div className="bg-background h-auto md:h-screen  p-2 lg:p-7  lg:flex lg:justify-between ">
+    <div className="bg-background h-auto md:h-screen lg:h-auto  p-2 lg:p-7  lg:flex lg:justify-between ">
       {/*  */}
-      <div className="w-[98%] p-2 mx-auto lg:w-[20%] flex  lg:flex-col gap-5 lg:gap-7 lg:py-8 mt-2.5 shadow-2xl shadow-gray-900 border-gray-500 ">
+      <div className="w-[98%] p-2 mx-auto lg:w-[20%] flex  lg:flex-col gap-5 lg:gap-7 lg:py-8 mt-2.5 shadow-2xl   border-gray-900 ">
         {coinSelection.map((c, index) => (
           <button
             className={`flex justify-between w-30 mx-auto px-3 py-1 rounded-lg transition-colors
