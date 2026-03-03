@@ -1,17 +1,18 @@
 import { IoIosTrendingUp } from "react-icons/io";
 
-const formatCryptoNumber = (num) => {
+const formatCryptoNumber = (num, isCurrency = false) => {
   if (num === null || num === "undefined") return "-";
-
+  let formatted;
   const number = Number(num);
 
-  if (number >= 1_000_000_000) return (number / 1_000_000_000).toFixed(1) + "B";
+  if (number >= 1_000_000_000)
+    formatted = (number / 1_000_000_000).toFixed(1) + "B";
+  else if (number >= 1_000_000)
+    formatted = (number / 1_000_000).toFixed(1) + "M";
+  else if (number >= 1_000) formatted = (number / 1_000).toFixed(1) + "K";
+  else formatted = number.toString();
 
-  if (number >= 1_000_000) return (number / 1_000_000).toFixed(1) + "M";
-
-  if (number >= 1_000) return (number / 1_000).toFixed(1) + "K";
-
-  return number.toString();
+  return isCurrency ? `$${formatted}` : formatted;
 };
 
 function SignalItems({ label, value }) {
@@ -50,7 +51,7 @@ function SignalInsight({
         <SignalItems label="Momentum Score" value={momentumScore} />
         <SignalItems
           label="Whale Activity"
-          value={formatCryptoNumber(whaleActivity)}
+          value={formatCryptoNumber(whaleActivity, true)}
         />
       </div>
 

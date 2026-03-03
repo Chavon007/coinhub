@@ -10,6 +10,22 @@ import {
   ComposedChart,
 } from "recharts";
 
+const formatNumber = (num, isCurrency = false) => {
+  if (num === null || num === undefined || num === "undefined") return "-";
+
+  const number = Number(num);
+  let formatted;
+
+  if (number >= 1_000_000_000)
+    formatted = (number / 1_000_000_000).toFixed(1) + "B";
+  else if (number >= 1_000_000)
+    formatted = (number / 1_000_000).toFixed(1) + "M";
+  else if (number >= 1_000) formatted = (number / 1_000).toFixed(1) + "K";
+  else formatted = number.toString();
+
+  return isCurrency ? `$${formatted}` : formatted;
+};
+
 function PriceInsight({
   coin,
   currentPrice,
@@ -19,7 +35,10 @@ function PriceInsight({
   target,
   volatility,
   corridor,
+  marketCap,
 }) {
+  const cleanTarget =
+    typeof target === "string" ? target.replace("$", "") : target;
   return (
     <div className="w-[95%] mx-auto md:mx-0  md:w-[62%] bg-surface rounded-2xl border border-gray-700">
       <div className=" flex flex-col p-3">
@@ -110,8 +129,17 @@ function PriceInsight({
             </div>
           </div>
 
-          <div className="w-[180px] h-auto flex flex-col gap-2 p-3 mt-2">
-            <p className="p-3 flex flex-col">
+          <div className="w-[180px]  flex flex-col  px-3 mt-2">
+            <p className="px-3  py-1 flex flex-col">
+              <span className="text-text-secondary font-roboto font-light text-xl md:text-base uppercase">
+                Market Cap
+              </span>
+              <span className="text-accent-green font-orbitron text-xl font-bold">
+                {formatNumber(marketCap, true)}
+              </span>
+            </p>
+
+            <p className="px-3  py-1 flex flex-col">
               <span className="text-text-secondary font-roboto font-light text-xl md:text-base uppercase">
                 Confidence
               </span>
@@ -119,15 +147,15 @@ function PriceInsight({
                 {confidence}
               </span>
             </p>
-            <p className="p-3 flex flex-col">
+            <p className="px-3  py-1 flex flex-col">
               <span className="text-text-secondary font-roboto font-light text-xl md:text-base uppercase">
                 Target
               </span>
               <span className="font-orbitron text-xl font-bold text-text-primary">
-                {target}
+                {formatNumber(cleanTarget, true)}
               </span>
             </p>
-            <p className="p-3 flex flex-col">
+            <p className="px-3 py-1 flex flex-col">
               <span className="text-text-secondary font-roboto font-light text-xl md:text-base uppercase">
                 Volatility
               </span>{" "}

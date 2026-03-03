@@ -202,8 +202,7 @@ export const fetchSentiment = async (ticker = "BTC") => {
 // AI prediction with groq ai
 
 export const fetchPrediction = async (coinData) => {
-  const { name, currentPrice, change24h, whaleProxy, sentimentScore } =
-    coinData;
+  const { name, currentPrice, change24h, whaleProxy, sentimentScore } = coinData;
 
   const prompt = `You are a crypto market analyst. Analyze this crypto data and return JSON only. 
   Coin:${name}
@@ -214,16 +213,16 @@ export const fetchPrediction = async (coinData) => {
  
   Return only in JSON array with a single object:[{
   "prediction": "expected % move in the next 24h",
-  "advice": "1-2 sentence advice for the traders" },
- "sentimentRadius": "one word: BULLISH, BEARISH, or NEUTRAL",
-    "sentimentRadiusMessage": "1 sentence explaining the market mood based on the data",
-    "institutionalFlow": "HIGH, MODERATE, or LOW based on market cap and whale activity",
-    "momentumScore": "a score from 0-100 based on price change and whale activity",
-    "confidence": "percentage e.g 72% - how confident the prediction is",
-    "target": "price target in next 24h e.g $95.00",
-    "volatility": "LOW, MEDIUM, or HIGH based on 24h change magnitude"
-  ]
-  `;
+  "advice": "1-2 sentence advice for the traders",
+  "sentimentRadius": "one word: BULLISH, BEARISH, or NEUTRAL",
+  "sentimentRadiusMessage": "1 sentence explaining the market mood based on the data",
+  "institutionalFlow": "HIGH, MODERATE, or LOW based on market cap and whale activity",
+  "momentumScore": "a score from 0-100 based on price change and whale activity",
+  "confidence": "percentage e.g 72%",
+  "target": "price target in next 24h e.g 95.00",
+  "volatility": "LOW, MEDIUM, or HIGH based on 24h change magnitude"
+}]`;
+
   try {
     const res = await groqLimiter.execute(() =>
       groqai.chat.completions.create({
@@ -231,8 +230,7 @@ export const fetchPrediction = async (coinData) => {
         messages: [
           {
             role: "system",
-            content:
-              "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
+            content: "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
           },
           {
             role: "user",
@@ -241,15 +239,16 @@ export const fetchPrediction = async (coinData) => {
         ],
         max_tokens: 1000,
         temperature: 0.3,
-      }),
+      })
     );
 
     const content = res.choices[0].message.content.trim();
-    const parsed = JSON.parse(content);
+    const clean = content.replace(/```json|```/g, "").trim();
+    const parsed = JSON.parse(clean);
 
     return parsed[0] || { prediction: "0%", advice: "No advice available" };
   } catch (err) {
-    console.error(err);
+    console.error("❌ GROQ ERROR:", err.message);
     return { prediction: "0%", advice: "Prediction temporarily unavailable" };
   }
 };
