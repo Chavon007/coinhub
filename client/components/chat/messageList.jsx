@@ -6,8 +6,8 @@ function MessageList({ message, currentUserId }) {
       {message.map((m, index) => (
         <MessageItem
           key={index}
-          message={message}
-          isOwnMessage={message.senderId === currentUserId}
+          message={m}
+          isOwnMessage={m.senderId === currentUserId}
         />
       ))}
     </div>

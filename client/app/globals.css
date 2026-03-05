@@ -10,48 +10,13 @@
   --font-nunito-sans: "Nunito Sans", sans-serif;
   --font-roboto: "Roboto Mono", monospace;
 
-
-
-  --color-background: #0B0F1A;
+  --color-background: #0b0f1a;
   --color-surface: #121826;
-  --color-accent-green: #00D395;
-  --color-accent-blue: #1E90FF;
-  --color-text-primary: #E5E7EB;
-  --color-text-secondary: #9CA3AF;
-  --color-border: #1F2937;
-  --color-error: #F87171;
-  --color-success: #22C55E;
+  --color-accent-green: #00d395;
+  --color-accent-blue: #1e90ff;
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #9ca3af;
+  --color-border: #1f2937;
+  --color-error: #f87171;
+  --color-success: #22c55e;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

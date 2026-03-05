@@ -38,7 +38,7 @@ function Header() {
           </Link>
           <Link
             className="text-text-secondary font-roboto font-bold hover:text-text-primary"
-            href=""
+            href="/aichat"
           >
             News
           </Link>

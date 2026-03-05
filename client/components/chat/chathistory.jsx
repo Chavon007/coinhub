@@ -1,3 +1,5 @@
+import { FaPlus } from "react-icons/fa6";
+
 const savedQueries = [
   {
     title: "What's driving BTC volatility?",
@@ -27,10 +29,18 @@ const recentChat = [
 
 function ChatHistory() {
   return (
-    <div>
+    <div className="w-[20%] shadow-2xl flex flex-col gap-2 p-4 shadow-gray-500">
       {/* button for new chat */}
-      <div>
-        <button>New Chat</button>
+      <div className="w-[200px] bg-accent-green rounded-xl p-2 hover:bg-green-400">
+        <button className="flex justify-self-center gap-2 items-center text-text-primary">
+          {" "}
+          <span className="text-base font-nunito-sans font-bold">
+            <FaPlus />
+          </span>
+          <span className="text-sm font-bold font-nunito-sans uppercase">
+            New Chat
+          </span>
+        </button>
       </div>
 
       {/* Save Queries */}
@@ -38,7 +48,7 @@ function ChatHistory() {
         <h5>Saved Queries</h5>
         <div>
           {savedQueries.map((q, index) => (
-            <button key={index}>{q}</button>
+            <button key={index}>{q.title}</button>
           ))}
         </div>
       </div>
@@ -49,7 +59,7 @@ function ChatHistory() {
         <h5>Recent Conversations</h5>
         <div>
           {recentChat.map((c, index) => (
-            <button key={index}>{c}</button>
+            <button key={index}>{c.title}</button>
           ))}
         </div>
       </div>

@@ -9,8 +9,8 @@ import Image from "next/image";
 function Mainhome() {
   const [menu, setMenu] = useState(false);
   return (
-    <div className="container mx-auto bg-background w-full h-auto p-[10px] pb-[30px]">
-      <div className=" w-[98%] mx-auto h-auto mt-[10px]">
+    <div className=" mx-auto bg-background w-full h-auto p-[10px] pb-[30px]">
+      <div className="container  w-[99%] mx-auto h-auto mt-[10px]">
         {/* header section */}
         <div className="flex justify-between items-center px-[10px]  ">
           {/* logo */}

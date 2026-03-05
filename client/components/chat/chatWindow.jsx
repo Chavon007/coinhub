@@ -53,7 +53,7 @@ function ChatWindow() {
   };
 
   return (
-    <div>
+    <div className="w-[60%] mx-auto bg-surface">
       <div>
         <MessageList message={message} currentUserId={currentUser.id} />
       </div>
