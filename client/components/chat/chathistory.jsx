@@ -44,31 +44,40 @@ function ChatHistory() {
       </div>
 
       {/* Save Queries */}
-      <div>
-        <h5>Saved Queries</h5>
-        <div>
+      <div className="border-b px-2 pt-2 pb-7  flex flex-col gap-2">
+        <h5 className="text-text-secondary font-outfit font-light text-sm">
+          Saved Queries
+        </h5>
+        <div className=" grid grid-cols-1 gap-3">
           {savedQueries.map((q, index) => (
-            <button key={index}>{q.title}</button>
+            <button
+              className="bg-surface rounded border p-2  font-medium  font-nunito-sans text-xs text-text-primary"
+              key={index}
+            >
+              {q.title}
+            </button>
           ))}
         </div>
       </div>
 
       {/* Recent Chat */}
 
-      <div>
-        <h5>Recent Conversations</h5>
-        <div>
+      <div className="border-b px-2 pt-2 pb-7  flex flex-col gap-2">
+        <h5 className="text-text-secondary font-outfit font-light text-sm">
+          Recent Conversations
+        </h5>
+        <div className=" grid grid-cols-1 gap-3">
           {recentChat.map((c, index) => (
-            <button key={index}>{c.title}</button>
+            <button className="bg-surface rounded border-l p-2  font-medium  font-nunito-sans text-xs text-text-primary" key={index}>{c.title}</button>
           ))}
         </div>
       </div>
 
       {/* AI MODEL */}
 
-      <div>
-        <h5>AI MODEL</h5>
-        <p>CryptoSense v2.1</p>
+      <div className="mt-auto">
+        <h5 className="text-text-secondary font-orbitron font-bold text-sm">AI MODEL</h5>
+        <p className="text-center mt-2 uppercase  bg-surface rounded border p-2  font-light  font-nunito-sans text-xs text-text-primary">CryptoSense v2.1</p>
       </div>
     </div>
   );
