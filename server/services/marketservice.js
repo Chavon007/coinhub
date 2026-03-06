@@ -356,3 +356,12 @@ export const preloaderAllInsight = async () => {
     .filter((r) => r.status === "fulfilled" && r.value)
     .map((r) => r.value);
 };
+
+// ai caht with groq
+
+
+const buildSystemPrompt = async (coinContext) => {
+  
+
+  let base = ""
+}
