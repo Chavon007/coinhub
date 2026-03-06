@@ -44,14 +44,14 @@ function ChatHistory() {
       </div>
 
       {/* Save Queries */}
-      <div className="border-b px-2 pt-2 pb-7  flex flex-col gap-2">
+      <div className=" border-b border-b-gray-500 px-2 pt-2 pb-7  flex flex-col gap-2">
         <h5 className="text-text-secondary font-outfit font-light text-sm">
           Saved Queries
         </h5>
         <div className=" grid grid-cols-1 gap-3">
           {savedQueries.map((q, index) => (
             <button
-              className="bg-surface rounded border p-2  font-medium  font-nunito-sans text-xs text-text-primary"
+              className="bg-surface rounded border p-2 font-medium  font-nunito-sans text-xs text-text-primary"
               key={index}
             >
               {q.title}
@@ -62,7 +62,7 @@ function ChatHistory() {
 
       {/* Recent Chat */}
 
-      <div className="border-b px-2 pt-2 pb-7  flex flex-col gap-2">
+      <div className=" border-b border-b-gray-500 px-2 pt-2 pb-7  flex flex-col gap-2">
         <h5 className="text-text-secondary font-outfit font-light text-sm">
           Recent Conversations
         </h5>

@@ -38,26 +38,39 @@ const aiConfeidence = [
 
 const portfolioSnapShot = [
   {
-    title: "",
-    value: "",
+    title: "$48,230",
+    value: "+$1,420",
     assets: 7,
   },
 ];
 
 function ReferenceToken() {
   return (
-    <div className="w-[20%]">
+    <div className="w-[20%] shadow-2xl flex flex-col gap-2 p-4 shadow-gray-500">
       {/* Referenced Tokens */}
-      <div>
-        <h4>Referenced Tokens</h4>
-        <div>
+      <div className=" border-b border-b-gray-500 px-2 pt-2 pb-7  flex flex-col gap-2">
+        <h4 className="text-text-secondary font-outfit font-light text-sm">
+          Referenced Tokens
+        </h4>
+        <div className="grid grid-cols-1 gap-3">
           {coin.map((c, index) => (
-            <div key={index}>
-              <p>
-                <span>{c.name}</span>
-                <span>{c.price}</span>
+            <div
+              className="flex justify-between bg-surface rounded border border-gray-300 p-2 items-center"
+              key={index}
+            >
+              <p className="flex flex-col">
+                <span className="text-base font-roboto font-bold text-text-primary">
+                  {c.name}
+                </span>
+                <span className="text-xs italic font-nunito-sans font-light text-text-secondary">
+                  {c.price}
+                </span>
               </p>
-              <p>{c.value}</p>
+              <p
+                className={`${c.value?.startsWith("-") ? "text-red-500" : "text-accent-green"} font-light font-outfit text-sm`}
+              >
+                {c.value}
+              </p>
             </div>
           ))}
         </div>
@@ -65,13 +78,22 @@ function ReferenceToken() {
 
       {/* AI Confidence */}
 
-      <div>
-        <div>
-          <h4>AI Confidence</h4>
+      <div className=" border-b border-b-gray-500 px-2 pt-2 pb-7  flex flex-col gap-2">
+        <h4 className="text-text-secondary font-outfit font-light text-sm">
+          AI Confidence
+        </h4>
+        <div className="grid grid-cols-1 gap-2">
           {aiConfeidence.map((a, index) => (
-            <div key={index}>
-              <p>
-                <span>{a.title}</span> <span>{a.level}</span>
+            <div className="" key={index}>
+              <p className="flex justify-between items-center">
+                <span className="text-text-primary text-xs font-outfit font-bold">
+                  {a.title}
+                </span>{" "}
+                <span
+                  className={`${a.level?.startsWith("-") ? "text-red-500" : "text-accent-green"} font-light text-xs font-outfit`}
+                >
+                  {a.level}
+                </span>
               </p>
             </div>
           ))}
@@ -80,19 +102,38 @@ function ReferenceToken() {
 
       {/* Portfolio Snapshot */}
 
-      <div>
-        <h4>Portfolio Snapshot</h4>
-        <div>
+      <div className="px-2 pt-2 pb-7  flex flex-col gap-2">
+        <h4 className="text-text-secondary font-outfit font-light text-sm">
+          Portfolio Snapshot
+        </h4>
+        <div className="grid grid-cols-1 gap-3">
           {portfolioSnapShot.map((p, index) => (
-            <div key={index}>
-              <p>
-                <span>Value:</span> <span>{p.title}</span>
+            <div className="flex flex-col gap-2" key={index}>
+              <p className="flex items-center gap-2">
+                <span className="text-text-primary font-outfit text-xs font-light">
+                  Value:
+                </span>{" "}
+                <span className="text-text-secondary text-xs font-bold font-nunito-sans">
+                  {p.title}
+                </span>
               </p>
-              <p>
-                <span>24h P&L:</span> <span>{p.value}</span>
+              <p className="flex items-center gap-2">
+                <span className="text-text-primary font-outfit text-xs font-light">
+                  24h P&L:
+                </span>{" "}
+                <span
+                  className={`${p.value?.startsWith("-") ? "text-red-500" : "text-accent-green"} text-sm font-nunito-sans font-bold`}
+                >
+                  {p.value}
+                </span>
               </p>
-              <p>
-                <span>Assets:</span> <span>{p.assets}</span>
+              <p className="flex items-center gap-2">
+                <span className="text-text-primary font-outfit text-xs font-light">
+                  Assets:
+                </span>{" "}
+                <span className="text-text-secondary text-xs font-bold font-nunito-sans">
+                  {p.assets}
+                </span>
               </p>
             </div>
           ))}
