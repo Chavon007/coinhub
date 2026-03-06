@@ -53,12 +53,12 @@ function ChatWindow() {
   };
 
   return (
-    <div className="w-[60%] mx-auto bg-surface">
-      <div>
+    <div className=" flex flex-col w-[60%] mx-auto bg-surface h-screen">
+      <div className="flex-1 overflow-y-auto p-4">
         <MessageList message={message} currentUserId={currentUser.id} />
       </div>
 
-      <div>
+      <div className="mt-auto pb-3">
         <MessageInput onSend={handleSendMessage} />
       </div>
     </div>

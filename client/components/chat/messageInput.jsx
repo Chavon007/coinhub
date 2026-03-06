@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { IoMdSend } from "react-icons/io";
@@ -18,19 +18,25 @@ function MessageInput({ onSend }) {
     setText("");
   };
   return (
-    <div>
+    <div className=" p-3 rounded-xl w-[98%] mx-auto bg-background">
       <form onSubmit={handleSubmit}>
-        {error && <p>{error}</p>}
+        {error && (
+          <p className="text-red-500 text-xs font-outfit font-light">{error}</p>
+        )}
 
-        <div>
+        <div className="flex justify-between items-center">
           <input
+            className="border-none w-[500px] p-2 text-text-primary text-xs font-outfit focus:outline-none placeholder:text-text-secondary placeholder:text-xs placeholder:font-nunito-sans"
             type="text"
             placeholder="Type your message"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
 
-          <button type="submit">
+          <button
+            className="text-text-primary text-2xl hover:text-text-secondary cursor-pointer"
+            type="submit"
+          >
             <IoMdSend />
           </button>
         </div>
