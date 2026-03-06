@@ -53,7 +53,7 @@ function ChatWindow() {
   };
 
   return (
-    <div className=" flex flex-col w-[60%] mx-auto bg-surface h-screen">
+    <div className=" flex flex-col w-full  md:w-[55%] lg:w-[60%] md:mx-auto bg-surface h-screen">
       <div className="flex-1 overflow-y-auto p-4">
         <MessageList message={message} currentUserId={currentUser.id} />
       </div>

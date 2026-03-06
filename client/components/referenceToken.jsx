@@ -46,7 +46,7 @@ const portfolioSnapShot = [
 
 function ReferenceToken() {
   return (
-    <div className="w-[20%] shadow-2xl flex flex-col gap-2 p-4 shadow-gray-500">
+    <div className="hidden md:w-[25%] lg:w-[20%] md:shadow-2xl md:flex md:flex-col md:gap-2 md:p-4 md:shadow-gray-500">
       {/* Referenced Tokens */}
       <div className=" border-b border-b-gray-500 px-2 pt-2 pb-7  flex flex-col gap-2">
         <h4 className="text-text-secondary font-outfit font-light text-sm">

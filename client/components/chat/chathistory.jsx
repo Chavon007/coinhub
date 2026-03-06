@@ -29,9 +29,9 @@ const recentChat = [
 
 function ChatHistory() {
   return (
-    <div className="w-[20%] shadow-2xl flex flex-col gap-2 p-4 shadow-gray-500">
+    <div className="hidden md:w-[25%] lg:w-[20%] md:shadow-2xl md:flex md:flex-col md:justify-between md:gap-5 lg:gap-2 md:p-4 md:shadow-gray-500">
       {/* button for new chat */}
-      <div className="w-[200px] bg-accent-green rounded-xl p-2 hover:bg-green-400">
+      <div className=" md:w-[150px] lg:w-[200px] bg-accent-green rounded-xl p-2 hover:bg-green-400">
         <button className="flex justify-self-center gap-2 items-center text-text-primary">
           {" "}
           <span className="text-base font-nunito-sans font-bold">
@@ -68,7 +68,12 @@ function ChatHistory() {
         </h5>
         <div className=" grid grid-cols-1 gap-3">
           {recentChat.map((c, index) => (
-            <button className="bg-surface rounded border-l p-2  font-medium  font-nunito-sans text-xs text-text-primary" key={index}>{c.title}</button>
+            <button
+              className="bg-surface rounded border-l p-2  font-medium  font-nunito-sans text-xs text-text-primary"
+              key={index}
+            >
+              {c.title}
+            </button>
           ))}
         </div>
       </div>
@@ -76,8 +81,12 @@ function ChatHistory() {
       {/* AI MODEL */}
 
       <div className="mt-auto">
-        <h5 className="text-text-secondary font-orbitron font-bold text-sm">AI MODEL</h5>
-        <p className="text-center mt-2 uppercase  bg-surface rounded border p-2  font-light  font-nunito-sans text-xs text-text-primary">CryptoSense v2.1</p>
+        <h5 className="text-text-secondary font-orbitron font-bold text-sm">
+          AI MODEL
+        </h5>
+        <p className="text-center mt-2 uppercase  bg-surface rounded border p-2  font-light  font-nunito-sans text-xs text-text-primary">
+          CryptoSense v2.1
+        </p>
       </div>
     </div>
   );
