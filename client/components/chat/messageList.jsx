@@ -3,9 +3,9 @@ import MessageItem from "./messageItems";
 function MessageList({ message, currentUserId }) {
   return (
     <div>
-      {message.map((m, index) => (
+      {message.map((m) => (
         <MessageItem
-          key={index}
+          key={m.id}
           message={m}
           isOwnMessage={m.senderId === currentUserId}
         />

@@ -28,13 +28,13 @@ function ChatWindow() {
     {
       id: "msg_3",
       text: "I need help with fixing my computer. It stopped working and it is not displaying any text on the screen",
-      senderId: "user_3",
+      senderId: "user_1",
       createdAt: new Date().toISOString(),
     },
     {
       id: "msg_4",
       text: "This sounds like a serious problem that need to be fixed",
-      senderId: "user_4",
+      senderId: "user_2",
       createdAt: new Date().toISOString(),
     },
   ]);
