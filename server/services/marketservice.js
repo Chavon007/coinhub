@@ -202,7 +202,8 @@ export const fetchSentiment = async (ticker = "BTC") => {
 // AI prediction with groq ai
 
 export const fetchPrediction = async (coinData) => {
-  const { name, currentPrice, change24h, whaleProxy, sentimentScore } = coinData;
+  const { name, currentPrice, change24h, whaleProxy, sentimentScore } =
+    coinData;
 
   const prompt = `You are a crypto market analyst. Analyze this crypto data and return JSON only. 
   Coin:${name}
@@ -230,7 +231,8 @@ export const fetchPrediction = async (coinData) => {
         messages: [
           {
             role: "system",
-            content: "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
+            content:
+              "You are a JSON-only API. Return valid JSON arrays with no markdown, no code blocks, no extra text.",
           },
           {
             role: "user",
@@ -239,7 +241,7 @@ export const fetchPrediction = async (coinData) => {
         ],
         max_tokens: 1000,
         temperature: 0.3,
-      })
+      }),
     );
 
     const content = res.choices[0].message.content.trim();
@@ -359,9 +361,20 @@ export const preloaderAllInsight = async () => {
 
 // ai caht with groq
 
+export const buildSystemPrompt = async (coinContext) => {
+  let base = `You are a professional crypto market analyst and assistant.
+You help users understand cryptocurrency markets, prices, trends, and investment strategies.
+Be concise, clear, and always remind users that crypto is volatile and nothing is financial advice.`;
 
-const buildSystemPrompt = async (coinContext) => {
-  
+  if (coinContext) {
+    base += `\n\nCurrent coin context:
+- Coin: ${coinContext.coin}
+- Current Price: $${coinContext.price}
+- Market Cap: ${coinContext.marketCap}
+- 24h Change: ${coinContext.change24h}%
+- Analysis Summary: ${coinContext.analysis}
+Use this data to give grounded, real-time answers.`;
+  }
 
-  let base = ""
-}
+  return base;
+};

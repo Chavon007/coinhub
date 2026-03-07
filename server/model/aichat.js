@@ -25,4 +25,4 @@ const aiChatSchema = new mongoose.Schema(
 
 aiChatSchema.index({ userId: 1, createdAt: -1 });
 
-export default mongoose.Model("aichat", aiChatSchema);
+export default mongoose.model("aichat", aiChatSchema);
